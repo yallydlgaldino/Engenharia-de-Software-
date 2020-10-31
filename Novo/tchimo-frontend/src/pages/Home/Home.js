@@ -1,15 +1,17 @@
 import React from 'react'
 
-import Logo from '../static/images/logo.svg'
-import PeopleIcon from '../static/images/people.svg'
-import JoinIcon from '../static/images/join.svg'
-import ArrowIcon from '../static/images/arrow.svg'
+import {Link} from 'react-router-dom'
 
-import styles from './InitialScreen.module.css'
+import Logo from '../../static/images/logo.svg'
+import PeopleIcon from '../../static/images/people.svg'
+import JoinIcon from '../../static/images/join.svg'
+import ArrowIcon from '../../static/images/arrow.svg'
 
-function InitialScreen() {
+import styles from './Home.module.css'
+
+function Home() {
     return (
-        <div className={styles.initialScreen}>
+        <div className={styles.Home}>
             <div className={styles.logoContainer}>
                 <img className={styles.logo} src={Logo} alt="Tchimo Logo" />
             </div>
@@ -21,19 +23,19 @@ function InitialScreen() {
             </div>
             
             <div className={styles.optionsContainer}> 
-                <button className={styles.button}>
+                <Link to="/login" className={styles.button}>
                     <img src={PeopleIcon} alt="People Icon" />
                     <span>criar sala</span>
                     <img src={ArrowIcon} alt="People Icon" />
-                </button>
-                <button className={styles.button}>
+                </Link>
+                <Link to="/login" className={styles.button}>
                     <img src={JoinIcon} alt="People Icon" />
                     <span>participar</span>
                     <img src={ArrowIcon} alt="People Icon" />
-                </button>
+                </Link>
             </div>
         </div>
     )
 }
 
-export default InitialScreen
+export default Home
