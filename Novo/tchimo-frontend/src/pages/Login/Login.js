@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Redirect, Link } from 'react-router-dom'
-import { useFormik } from 'formik'
+import { Formik, Form, ErrorMessage, Field } from 'formik'
 import axios from 'axios'
 import * as Yup from 'yup'
 
@@ -49,39 +49,37 @@ const Login = () => {
     }
   };
 
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: ''
-    },
-    onSubmit: values => {
-      submitCredentials(values)
-    },
-  });
+
   return (
     <>
       {loginError != '' && <p>Houve um erro no login</p>}
       {loginSuccess != '' && <p>Login realizado com sucesso</p>}
-      
-      <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-        />
-        <label htmlFor="password">Senha</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
-        <button type="submit">entrar</button>
-      </form>
+
+      <Formik 
+        initialValues={{
+            email: '',
+            password: '',
+        }}
+        validationSchema={LoginSchema}
+        onSubmit={ values => {
+            submitCredentials(values)
+        }}
+      >
+        {({ errors, touched }) => (
+            <Form>
+
+                <label htmlFor="email">Email</label>
+                <Field id="email" name="email"/>
+                <ErrorMessage name="email" component="span" />
+
+                <label htmlFor="password">Senha</label>
+                <Field id="password" type="password" name="password"/>
+                <ErrorMessage name="password" component="span"/>
+
+                <button type="submit">cadastrar</button>
+            </Form>
+        )}
+      </Formik>
 
       <Link to="/signup">Ainda não se cadastrou ?</Link>
     </>
