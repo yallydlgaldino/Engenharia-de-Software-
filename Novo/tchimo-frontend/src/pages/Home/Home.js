@@ -8,6 +8,7 @@ import JoinIcon from '../../static/images/join.svg'
 import ArrowIcon from '../../static/images/arrow.svg'
 
 import styles from './Home.module.css'
+import '../../App.css'
 
 function Home() {
     return (
@@ -23,15 +24,15 @@ function Home() {
             </div>
             
             <div className={styles.optionsContainer}> 
-                <Link to="/login" className={styles.button}>
+                <Link to="/login" className="button">
                     <img src={PeopleIcon} alt="People Icon" />
                     <span>criar sala</span>
-                    <img src={ArrowIcon} alt="People Icon" />
+                    <img src={ArrowIcon} alt="Arrow Icon" />
                 </Link>
-                <Link to="/login" className={styles.button}>
+                <Link to="/login" className="button">
                     <img src={JoinIcon} alt="People Icon" />
                     <span>participar</span>
-                    <img src={ArrowIcon} alt="People Icon" />
+                    <img src={ArrowIcon} alt="Arrow Icon" />
                 </Link>
             </div>
         </div>

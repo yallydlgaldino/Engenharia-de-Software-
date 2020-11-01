@@ -38,8 +38,8 @@ const AuthenticatedRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={() =>
-        auth.isAuthenticated() ? (
-          {children}
+        !auth.isAuthenticated() ? (
+          <>{children}</>
         ) : (
           <Redirect to="/" />
         )
@@ -52,17 +52,17 @@ const AppRoutes = () => {
   return (
     <>
       <Switch>
-        <AuthenticatedRoute path="/classes"> 
+        <AuthenticatedRoute exact path="/classes"> 
           <List />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute path="/classes/:code"> 
-          <Classroom />
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/classes/join">
           <Join /> 
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/classes/register"> 
           <Register />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute exact path="/classes/:code"> 
+          <Classroom />
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/classes/:code/members">
           <Members />

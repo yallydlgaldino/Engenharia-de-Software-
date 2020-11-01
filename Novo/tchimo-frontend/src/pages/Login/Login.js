@@ -1,10 +1,14 @@
 import React, { useState, useContext } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
-import axios from 'axios'
 import * as Yup from 'yup'
-
+import { publicFetch } from '../../util/fetch'
 import { AuthContext } from '../../contexts/AuthContext' 
+
+import PeopleIcon from '../../static/images/people.svg'
+import ArrowIcon from '../../static/images/arrow.svg'
+
+import '../../App.css'
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().required('Email is required'),
@@ -21,14 +25,10 @@ const Login = () => {
 
   const submitCredentials = async credentials => {
 
-    const publicAxios = axios.create({
-      baseURL: 'http://tchimo-webservice.herokuapp.com/api/'
-    })
-
     try {
       setLoginLoading(true)
       
-      const { data } = await publicAxios.post(
+      const { data } = await publicFetch.post(
         `usuarios/login`,
         credentials
       )
@@ -76,7 +76,11 @@ const Login = () => {
                 <Field id="password" type="password" name="password"/>
                 <ErrorMessage name="password" component="span"/>
 
-                <button type="submit">cadastrar</button>
+                <button type="submit" className="button">
+                  <img src={PeopleIcon} alt="People Icon" />
+                    <span>entrar</span>
+                  <img src={ArrowIcon} alt="Arrow Icon" />
+                </button>
             </Form>
         )}
       </Formik>

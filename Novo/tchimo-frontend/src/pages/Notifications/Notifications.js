@@ -2,7 +2,7 @@ import React from 'react'
 
 function Notifications() {
     return (
-        <p>Notifications</p>
+        <p>Notificações</p>
     )
 }
 

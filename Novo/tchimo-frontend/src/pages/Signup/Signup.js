@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
-import axios from 'axios'
 import * as Yup from 'yup'
+import { publicFetch } from '../../util/fetch'
 
 import { AuthContext } from '../../contexts/AuthContext' 
 
@@ -31,15 +31,11 @@ const Signup = () => {
 
   const submitCredentials = async signupData => {
 
-    const publicAxios = axios.create({
-      baseURL: 'http://tchimo-webservice.herokuapp.com/api/'
-    })
-
     if (signupData.password === signupData.confirmPassword) {
         const credentials = {name: signupData.name, email: signupData.email, password: signupData.password}
         
         try {
-            const { data } = await publicAxios.post(
+            const { data } = await publicFetch.post(
                 `usuarios/adiciona`,
                 credentials
             )
@@ -63,6 +59,8 @@ const Signup = () => {
 
   return (
     <>
+      <p>Cadastre-se</p>
+
       <Formik 
         initialValues={{
             name: '',

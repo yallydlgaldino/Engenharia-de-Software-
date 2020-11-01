@@ -2,7 +2,7 @@ import React from 'react'
 
 function Members() {
     return (
-        <p>Members</p>
+        <p>Membros da Sala</p>
     )
 }
 
