@@ -1,9 +1,13 @@
 import React from 'react'
+import { PDFDownloadLink } from '@react-pdf/renderer'
+
+import MyDocument from '../../../components/MyDocument'
 
 function Classroom(props) {
-    alert(props);
     return (
-        <p>Classroom</p>
+        <PDFDownloadLink document={<MyDocument />} fileName="groups.pdf">
+            {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download now!')}
+        </PDFDownloadLink>
     )
 }
 
