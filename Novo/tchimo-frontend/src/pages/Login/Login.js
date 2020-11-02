@@ -5,10 +5,12 @@ import * as Yup from 'yup'
 import { publicFetch } from '../../util/fetch'
 import { AuthContext } from '../../contexts/AuthContext' 
 
-import PeopleIcon from '../../static/images/people.svg'
+import Logo from '../../static/images/logo.svg'
+import EnterIcon from '../../static/images/enter.svg'
 import ArrowIcon from '../../static/images/arrow.svg'
 
 import '../../App.css'
+import styles from './Login.module.css'
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().required('Email is required'),
@@ -49,11 +51,14 @@ const Login = () => {
     }
   };
 
-
   return (
     <>
       {loginError != '' && <p>Houve um erro no login</p>}
       {loginSuccess != '' && <p>Login realizado com sucesso</p>}
+
+      <div className={styles.logoContainer}>
+        <img src={Logo} className={styles.logo} alt="Tchimo Logo" />
+      </div>
 
       <Formik 
         initialValues={{
@@ -66,26 +71,31 @@ const Login = () => {
         }}
       >
         {({ errors, touched }) => (
-            <Form>
+            <Form className="loginForm" autocomplete="off">
+                <div className="fieldContainer">
+                  <label htmlFor="email">Email:</label>
+                  <Field id="email" name="email" className="field" placeholder="tchimo@domain.com" />
+                  <div><ErrorMessage name="email" component="span" className="errorMessage" placeholder="tchimo@domain.com" /></div> 
+                </div>
 
-                <label htmlFor="email">Email</label>
-                <Field id="email" name="email"/>
-                <ErrorMessage name="email" component="span" />
-
-                <label htmlFor="password">Senha</label>
-                <Field id="password" type="password" name="password"/>
-                <ErrorMessage name="password" component="span"/>
+                <div className="fieldContainer">
+                  <label htmlFor="password">Senha:</label>
+                  <Field id="password" type="password" name="password" className="field" placeholder="senha" />
+                  <div><ErrorMessage name="password" component="span" className="errorMessage" /></div>
+                </div>
 
                 <button type="submit" className="button">
-                  <img src={PeopleIcon} alt="People Icon" />
+                  <img src={EnterIcon} alt="Enter Icon" />
                     <span>entrar</span>
                   <img src={ArrowIcon} alt="Arrow Icon" />
                 </button>
             </Form>
         )}
       </Formik>
-
-      <Link to="/signup">Ainda não se cadastrou ?</Link>
+      
+      <div className="footer">
+        <Link to="/signup" className="questionLink">Ainda não se cadastrou ?</Link>
+      </div>
     </>
   );
 };

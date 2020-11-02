@@ -6,6 +6,9 @@ import { publicFetch } from '../../util/fetch'
 
 import { AuthContext } from '../../contexts/AuthContext' 
 
+import EnterIcon from '../../static/images/enter.svg'
+import ArrowIcon from '../../static/images/arrow.svg'
+
 const SignupSchema = Yup.object().shape({
     name: Yup.string()
         .min(2, 'Too Short!')
@@ -75,28 +78,42 @@ const Signup = () => {
       >
         {({ errors, touched }) => (
             <Form>
-                <label htmlFor="name">Nome</label>
-                <Field id="name" name="name"/>
-                <ErrorMessage name="name" component="span" />
+                <div className="fieldContainer">
+                  <label htmlFor="name">Nome:</label>
+                  <Field id="name" name="name" className="field" placeholder="nome" />
+                  <div><ErrorMessage name="name" component="span" className="errorMessage" /></div> 
+                </div>
 
-                <label htmlFor="email">Email</label>
-                <Field id="email" name="email"/>
-                <ErrorMessage name="email" component="span" />
+                <div className="fieldContainer">
+                  <label htmlFor="email">Email:</label>
+                  <Field id="email" name="email" className="field" placeholder="tchimo@domain.com" />
+                  <div><ErrorMessage name="email" component="span" className="errorMessage" /></div> 
+                </div>
 
-                <label htmlFor="password">Senha</label>
-                <Field id="password" type="password" name="password"/>
-                <ErrorMessage name="password" component="span"/>
+                <div className="fieldContainer">
+                  <label htmlFor="password">Senha:</label>
+                  <Field id="password" type="password" name="password" className="field" placeholder="senha" />
+                  <div><ErrorMessage name="password" component="span" className="errorMessage" /></div>
+                </div>
 
-                <label htmlFor="confirmPassword">Confirme a Senha</label>
-                <Field id="confirmPassword" type="password" name="confirmPassword"/>
-                <ErrorMessage name="confirmPassword" component="span"/>
+                <div className="fieldContainer">
+                  <label htmlFor="confirmPassword">Confirme a Senha:</label>
+                  <Field id="confirmPassword" type="password" name="confirmPassword" className="field" placeholder="senha" />
+                  <div><ErrorMessage name="confirmPassword" component="span" className="errorMessage" /></div>
+                </div>
 
-                <button type="submit">cadastrar</button>
+                <button type="submit" className="button">
+                  <img src={EnterIcon} alt="Enter Icon" />
+                    <span>cadastrar</span>
+                  <img src={ArrowIcon} alt="Arrow Icon" />
+                </button>
             </Form>
         )}
       </Formik>
 
-      <Link to="/login">Já possui um cadastro ?</Link>
+      <div className="footer">
+        <Link to="/login" className="questionLink">Já possui um cadastro ?</Link>
+      </div>
     </>
   );
 };

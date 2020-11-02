@@ -18,6 +18,10 @@ body, html {
   padding: 1.5em;
 }
 
+/* --- Shared styles --- */
+
+/* Button Style */
+
 .button {
   background-color: #316993;
   color: white;
@@ -31,7 +35,7 @@ body, html {
   padding: 1.6em 2em;
   height: 2em;
   width: 90%;
-  margin: 0.5em 1em;
+  margin: 0.5em 0.8em;
   border-radius: 0.3em;
   line-height: 0.1em;
   font-size: 1.2em;
@@ -40,4 +44,57 @@ body, html {
 .button img {
   width: 24px;
   height: 24px;
+}
+
+/* Field Style */
+
+.fieldContainer {
+  margin: 0.5em 1em;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldContainer label {
+  margin: 0.3em 0em;
+  color: #316993;
+}
+
+.fieldContainer .errorMessage {
+  color: white;
+  background-color: #FF6565;
+  border-radius: 0.2em;
+  padding: 0.2em 0.3em;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+.field {
+  color: #316993;
+  outline: none;
+  border: 2px solid #7aa6c7;
+  text-decoration: none;
+  padding: 1.2em 0.5em;
+  height: 1.2em;
+  border-radius: 0.3em;
+  line-height: 0.1em;
+  font-size: 1.2em;
+  transition: all 150ms;
+  margin-bottom: 0.3em;
+}
+
+.field:focus {
+  border: 2px solid #316993;
+}
+
+/* Link Style */
+
+.questionLink {
+  color: #316993;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
