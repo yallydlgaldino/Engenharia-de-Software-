@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 
+import { ToastContainer } from 'react-toastify';
+
 import './App.css' 
 
 import Home from './pages/Home/Home'
@@ -77,6 +79,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
+        <ToastContainer />
         <div className="app">
           <div className="wrapper">
             <AppRoutes />      

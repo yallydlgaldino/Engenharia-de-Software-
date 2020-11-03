@@ -40,11 +40,17 @@ body, html {
   border-radius: 0.3em;
   line-height: 0.1em;
   font-size: 1.2em;
+  transition: background 200ms;
+  margin-top: 1em;
 }
 
 .button img {
   width: 24px;
   height: 24px;
+}
+
+.button:hover {
+  background-color: #1f4461;
 }
 
 /* Field Style */

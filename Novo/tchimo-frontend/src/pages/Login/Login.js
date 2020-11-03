@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import * as Yup from 'yup'
 import { publicFetch } from '../../util/fetch'
+import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/AuthContext' 
 
 import Logo from '../../static/images/logo.svg'
@@ -11,10 +12,11 @@ import ArrowIcon from '../../static/images/arrow.svg'
 
 import '../../App.css'
 import styles from './Login.module.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().required('Email is required'),
-  password: Yup.string().required('Password is required')
+  email: Yup.string().required('O email é obrigatório'),
+  password: Yup.string().required('A senha é obrigatória')
 });
 
 const Login = () => {
@@ -36,26 +38,23 @@ const Login = () => {
       )
 
       authContext.setAuthState(data)
-      setLoginSuccess(data.message)
-      setLoginError('')
+      toast.success("Login realizado com sucesso", {
+        autoClose: 2000
+      })
 
       setTimeout(() => {
         setRedirectOnLogin(true)
       }, 500)
     } catch (error) {
-      console.log(error);
-      setLoginLoading(false)
       const { data } = error.response
-      setLoginError(data.message)
-      setLoginSuccess('')
+      toast.error(`Houve um erro no login: ${JSON.stringify(data.token)}`, {
+        autoClose: 2000
+      })
     }
   };
 
   return (
     <>
-      {loginError != '' && <p>Houve um erro no login</p>}
-      {loginSuccess != '' && <p>Login realizado com sucesso</p>}
-
       <div className={styles.logoContainer}>
         <img src={Logo} className={styles.logo} alt="Tchimo Logo" />
       </div>
@@ -71,7 +70,7 @@ const Login = () => {
         }}
       >
         {({ errors, touched }) => (
-            <Form className="loginForm" autocomplete="off">
+            <Form className="loginForm">
                 <div className="fieldContainer">
                   <label htmlFor="email">Email:</label>
                   <Field id="email" name="email" className="field" placeholder="tchimo@domain.com" />

@@ -13,18 +13,19 @@ import TchimoHeader from '../../components/TchimoHeader/TchimoHeader'
 
 const SignupSchema = Yup.object().shape({
     name: Yup.string()
-        .min(2, 'Too Short!')
-        .max(40, 'Too Long!')
-        .required('Required'),
-    email: Yup.string().email('Invalid email').required('Required'),
+        .min(2, 'Número de caracteres menor que 2')
+        .max(40, 'Número de caracteres maior que 40')
+        .required('O nome é obrigatório'),
+    email: Yup.string()
+        .email('O email é inválido')
+        .required('O email é obrigatório'),
     password: Yup.string()
-        .min(8, 'Too Short!')
-        .max(20, 'Too Long!')
-        .required('Required'),
-    confirmPassword: Yup.string()
-        .min(8, 'Too Short!')
-        .max(20, 'Too Long!')
-        .required('Required'),
+        .min(8, 'Número de caracteres menor que 8')
+        .max(20, 'Número de caracteres maior que 20')
+        .required('A senha é obrigatória'),
+    passwordConfirmation: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Senhas devem ser as mesmas')
+        .required('A confirmação de senha é obrigatória')
 });
 
 const Signup = () => {
@@ -73,7 +74,7 @@ const Signup = () => {
             name: '',
             email: '',
             password: '',
-            confirmPassword: ''
+            passwordConfirmation: ''
         }}
         validationSchema={SignupSchema}
         onSubmit={ values => {
@@ -101,9 +102,9 @@ const Signup = () => {
                 </div>
 
                 <div className="fieldContainer">
-                  <label htmlFor="confirmPassword">Confirme a Senha:</label>
-                  <Field id="confirmPassword" type="password" name="confirmPassword" className="field" placeholder="senha" />
-                  <div><ErrorMessage name="confirmPassword" component="span" className="errorMessage" /></div>
+                  <label htmlFor="passwordConfirmation">Confirme a Senha:</label>
+                  <Field id="passwordConfirmation" type="password" name="passwordConfirmation" className="field" placeholder="senha" />
+                  <div><ErrorMessage name="passwordConfirmation" component="span" className="errorMessage" /></div>
                 </div>
 
                 <button type="submit" className="button">
