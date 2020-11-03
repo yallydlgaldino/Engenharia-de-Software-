@@ -24,13 +24,11 @@ const Login = () => {
 
   const [loginSuccess, setLoginSuccess] = useState('')
   const [loginError, setLoginError] = useState('')
-  const [redirectOnLogin, setRedirectOnLogin] = useState(false)
-  const [loginLoading, setLoginLoading] = useState(false)
+  const [redirectOnLogin, setRedirectOnLogin] = useState(authContext.isAuthenticated())
 
   const submitCredentials = async credentials => {
 
     try {
-      setLoginLoading(true)
       
       const { data } = await publicFetch.post(
         `usuarios/login`,
