@@ -1,0 +1,21 @@
+.Header {
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #316993; 
+    color: white;
+    position: fixed;
+    text-transform: uppercase;
+    height: 16vw;
+    display: flex;
+    align-items: center;
+    padding-left: 2.5em;
+}
+
+.Header img {
+    padding-right: 0.6em;
+}
+
+.Header span {
+    font-size: 1.2em;
+}

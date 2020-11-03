@@ -16,6 +16,7 @@ body, html {
 
 .wrapper {
   padding: 1.5em;
+  padding-top: 18vw;
 }
 
 /* --- Shared styles --- */
@@ -97,4 +98,13 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Session Style */
+
+.session {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #316993;
+  margin-left: 0.5em;
 }

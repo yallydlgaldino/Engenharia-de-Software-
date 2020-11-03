@@ -9,6 +9,8 @@ import { AuthContext } from '../../contexts/AuthContext'
 import EnterIcon from '../../static/images/enter.svg'
 import ArrowIcon from '../../static/images/arrow.svg'
 
+import TchimoHeader from '../../components/TchimoHeader/TchimoHeader'
+
 const SignupSchema = Yup.object().shape({
     name: Yup.string()
         .min(2, 'Too Short!')
@@ -62,7 +64,9 @@ const Signup = () => {
 
   return (
     <>
-      <p>Cadastre-se</p>
+      <TchimoHeader />
+
+      <p className="session">Cadastre-se</p>
 
       <Formik 
         initialValues={{
