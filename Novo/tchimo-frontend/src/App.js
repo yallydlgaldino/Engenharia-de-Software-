@@ -6,11 +6,13 @@ import { ToastContainer } from 'react-toastify';
 
 import './App.css' 
 
+import Logo from './static/images/logo.svg'
+
 import Home from './pages/Home/Home'
 import Login from './pages/Login/Login'
 import Signup from './pages/Signup/Signup'
-import List from './pages/Classes/List/List';
-import Classroom from './pages/Classes/Classroom/Classroom';
+import List from './pages/Classes/List/List'
+import Classroom from './pages/Classes/Classroom/Classroom'
 import Join from './pages/Classes/Join/Join'
 import Register from './pages/Classes/Register/Register'
 import Members from './pages/Classes/Members/Members'
@@ -40,7 +42,7 @@ const AuthenticatedRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={() =>
-        !auth.isAuthenticated() ? (
+        auth.isAuthenticated() ? (
           <>{children}</>
         ) : (
           <Redirect to="/" />
@@ -75,18 +77,36 @@ const AppRoutes = () => {
   ) 
 } 
 
+const MobileFilter = ({ children, ...rest }) => {
+  const isMobile = window.matchMedia("(max-width: 760px)").matches
+  return (
+    <>
+        {isMobile ? (
+          <>{children}</>
+        ) : (
+          <div className="notSupportedContainer">
+            <img src={Logo} alt="Tchimo Icon" />
+            <p className="notSupportedMessage">Infelizmente, esse dispositivo ainda não é suportado :(</p>
+          </div>
+        )}
+    </>
+  )
+}
+
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <ToastContainer />
-        <div className="app">
-          <div className="wrapper">
-            <AppRoutes />      
+    <MobileFilter>
+      <Router>
+        <AuthProvider>
+          <ToastContainer />
+          <div className="app">
+            <div className="wrapper">
+              <AppRoutes />      
+            </div>
           </div>
-        </div>
-      </AuthProvider>
-    </Router>
+        </AuthProvider>
+      </Router>
+    </MobileFilter>
   ) 
 }
 

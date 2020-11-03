@@ -55,6 +55,8 @@ const Login = () => {
 
   return (
     <>
+      {redirectOnLogin && <Redirect to="/classes" />}
+
       <div className={styles.logoContainer}>
         <img src={Logo} className={styles.logo} alt="Tchimo Logo" />
       </div>
