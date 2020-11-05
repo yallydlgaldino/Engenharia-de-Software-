@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import * as Yup from 'yup'
 import { publicFetch } from '../../util/fetch'
+import { toast } from 'react-toastify';
 
 import { AuthContext } from '../../contexts/AuthContext' 
 
@@ -36,30 +37,28 @@ const Signup = () => {
   const [redirectOnLogin, setRedirectOnLogin] = useState(false)
 
   const submitCredentials = async signupData => {
+    const credentials = {name: signupData.name, email: signupData.email, password: signupData.password}
+    
+    try {
+        const { data } = await publicFetch.post(
+            `usuarios/adiciona`,
+            credentials
+        )
 
-    if (signupData.password === signupData.confirmPassword) {
-        const credentials = {name: signupData.name, email: signupData.email, password: signupData.password}
-        
-        try {
-            const { data } = await publicFetch.post(
-                `usuarios/adiciona`,
-                credentials
-            )
+        setSignupSuccess(data.message)
+        setSignupError('')
 
-            setSignupSuccess(data.message)
-            setSignupError('')
+        toast.success("Cadastro realizado com sucesso", {
+          autoClose: 2000
+        })
 
-            setTimeout(() => {
-                setRedirectOnLogin(true)
-            }, 500)
-        } catch (error) {
-            console.log(error);
-            const { data } = error.response
-            setSignupError(data.message)
-            setSignupSuccess('')
-        }
-    } else {
-        alert("Senhas incompatíveis...")
+        setTimeout(() => {
+            setRedirectOnLogin(true)
+        }, 500)
+    } catch (error) {
+      toast.error("Erro: Já existe usuário com esse email.", {
+        autoClose: 2000
+      })
     }
   };
 

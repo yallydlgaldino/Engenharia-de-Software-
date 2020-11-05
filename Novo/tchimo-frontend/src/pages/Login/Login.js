@@ -45,7 +45,7 @@ const Login = () => {
       }, 500)
     } catch (error) {
       const { data } = error.response
-      toast.error(`Houve um erro no login: ${JSON.stringify(data.token)}`, {
+      toast.error(JSON.stringify(data.token).replaceAll("\"", ""), {
         autoClose: 2000
       })
     }
