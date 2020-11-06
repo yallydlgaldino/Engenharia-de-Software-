@@ -1,0 +1,40 @@
+.tabbedMenu {
+    position: fixed;
+    height: 3.7em;
+    bottom: 0;
+    left: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #316993;
+    color: white;
+}
+
+.tabbedMenu li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 3.7em;
+    width: 100%;
+}
+
+.tabbedMenu span {
+    font-family: "Nunito", sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.7em;
+}
+
+.tabbedMenu svg {
+    width: 24px;
+    height: 24px;
+}
+
+.selectedTab {
+    background-color: #234A67;
+}

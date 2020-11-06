@@ -12,6 +12,13 @@
     padding-left: 2.5em;
 }
 
+.Link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+}
+
 .Header img {
     padding-right: 0.6em;
 }

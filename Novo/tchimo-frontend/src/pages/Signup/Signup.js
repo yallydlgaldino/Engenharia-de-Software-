@@ -7,8 +7,8 @@ import { toast } from 'react-toastify';
 
 import { AuthContext } from '../../contexts/AuthContext' 
 
-import EnterIcon from '../../static/images/enter.svg'
-import ArrowIcon from '../../static/images/arrow.svg'
+import HowToRegIcon from '@material-ui/icons/HowToReg';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import TchimoHeader from '../../components/TchimoHeader/TchimoHeader'
 
@@ -107,9 +107,9 @@ const Signup = () => {
                 </div>
 
                 <button type="submit" className="button">
-                  <img src={EnterIcon} alt="Enter Icon" />
-                    <span>cadastrar</span>
-                  <img src={ArrowIcon} alt="Arrow Icon" />
+                  <HowToRegIcon />
+                  <span>cadastrar</span>
+                  <ArrowForwardIosIcon />
                 </button>
             </Form>
         )}

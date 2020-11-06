@@ -16,6 +16,7 @@ import Classroom from './pages/Classes/Classroom/Classroom'
 import Join from './pages/Classes/Join/Join'
 import Register from './pages/Classes/Register/Register'
 import Members from './pages/Classes/Members/Members'
+import Notifications from './pages/Notifications/Notifications'
 
 import { AuthContext, AuthProvider } from './contexts/AuthContext'
 
@@ -42,7 +43,7 @@ const AuthenticatedRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={() =>
-        auth.isAuthenticated() ? (
+        !auth.isAuthenticated() ? (
           <>{children}</>
         ) : (
           <Redirect to="/" />
@@ -70,6 +71,9 @@ const AppRoutes = () => {
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/classes/:code/members">
           <Members />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/notifications">
+          <Notifications />
         </AuthenticatedRoute>
         <UnauthenticatedRoutes />
       </Switch>

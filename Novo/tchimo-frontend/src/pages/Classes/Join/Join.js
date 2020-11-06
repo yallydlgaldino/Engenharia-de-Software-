@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react'
-import { Redirect, Link } from 'react-router-dom'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import * as Yup from 'yup'
 import { publicFetch } from '../../../util/fetch'
+
+import TchimoHeader from '../../../components/TchimoHeader/TchimoHeader'
+import TabbedMenu from '../../../components/TabbedMenu/TabbedMenu'
 
 const JoinSchema = Yup.object().shape({
   code: Yup.string().required('Code is required')
@@ -38,6 +40,8 @@ const Join = () => {
 
   return (
     <>
+      <TchimoHeader />
+
       {joinError !== '' && <p>Houve um erro na sua solicitação!</p>}
       {joinSuccess !== '' && <p>Bem vindo a sua sala!</p>}
 
@@ -60,6 +64,8 @@ const Join = () => {
             </Form>
         )}
       </Formik>
+      
+      <TabbedMenu />
     </>
   );
 };

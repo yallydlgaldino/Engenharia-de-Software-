@@ -7,10 +7,11 @@ import '../../../App.css'
 
 import styles from './Register.module.css'
 
-import PeopleIcon from '../../../static/images/people.svg'
-import ArrowIcon from '../../../static/images/arrow.svg'
+import PeopleIcon from '@material-ui/icons/People'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import TchimoHeader from '../../../components/TchimoHeader/TchimoHeader'
+import TabbedMenu from '../../../components/TabbedMenu/TabbedMenu'
 
 const RegisterSchema = Yup.object().shape({
     name: Yup.string()
@@ -140,13 +141,15 @@ const Register = () => {
                 <ErrorMessage name="endingRadioGroup" component="span"/>
 
                 <Link to="/login" className="button">
-                    <img src={PeopleIcon} alt="People Icon" />
+                    <PeopleIcon />
                     <span>criar turma</span>
-                    <img src={ArrowIcon} alt="Arrow Icon" />
+                    <ArrowForwardIosIcon />
                 </Link>
             </Form>
         )}
       </Formik>
+
+      <TabbedMenu />
     </>
   );
 };

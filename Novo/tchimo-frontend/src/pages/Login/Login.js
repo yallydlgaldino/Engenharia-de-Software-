@@ -7,8 +7,8 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/AuthContext' 
 
 import Logo from '../../static/images/logo.svg'
-import EnterIcon from '../../static/images/enter.svg'
-import ArrowIcon from '../../static/images/arrow.svg'
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import '../../App.css'
 import styles from './Login.module.css'
@@ -84,9 +84,9 @@ const Login = () => {
                 </div>
 
                 <button type="submit" className="button">
-                  <img src={EnterIcon} alt="Enter Icon" />
-                    <span>entrar</span>
-                  <img src={ArrowIcon} alt="Arrow Icon" />
+                  <VpnKeyIcon />
+                  <span>entrar</span>
+                  <ArrowForwardIosIcon />
                 </button>
             </Form>
         )}

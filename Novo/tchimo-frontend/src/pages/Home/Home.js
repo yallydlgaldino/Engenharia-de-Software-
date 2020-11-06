@@ -3,9 +3,9 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 import Logo from '../../static/images/logo.svg'
-import PeopleIcon from '../../static/images/people.svg'
-import JoinIcon from '../../static/images/join.svg'
-import ArrowIcon from '../../static/images/arrow.svg'
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
+import PeopleIcon from '@material-ui/icons/People'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import styles from './Home.module.css'
 import '../../App.css'
@@ -25,14 +25,14 @@ function Home() {
             
             <div className={styles.optionsContainer}> 
                 <Link to="/login" className="button">
-                    <img src={PeopleIcon} alt="People Icon" />
+                    <PeopleIcon />
                     <span>criar sala</span>
-                    <img src={ArrowIcon} alt="Arrow Icon" />
+                    <ArrowForwardIosIcon />
                 </Link>
                 <Link to="/login" className="button">
-                    <img src={JoinIcon} alt="People Icon" />
+                    <EmojiPeopleIcon />
                     <span>participar</span>
-                    <img src={ArrowIcon} alt="Arrow Icon" />
+                    <ArrowForwardIosIcon />
                 </Link>
             </div>
         </div>
