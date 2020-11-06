@@ -1,0 +1,31 @@
+.radioContainer {
+    margin-left: 0.5em;
+}
+
+.radioContainer label {
+    text-transform: uppercase;
+    color: #316993;
+    font-weight: 600;
+    padding: 0 0.3em;
+}
+
+.radioContainer p {
+    font-weight: 300;
+    font-size: 0.9em;
+    margin-left: 2em;
+}
+
+.automaticOptionsContainer {
+    color: #316993;
+    font-weight: 500 !important;
+}
+
+.automaticOption {
+    width: 3em;
+    outline: 0;
+    border: 2px solid #316993;
+    border-radius: 0.2em;
+    padding: 0.3em 1em;
+    color: #316993;
+    margin: 0 0.3em;
+}

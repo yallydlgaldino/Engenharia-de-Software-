@@ -133,3 +133,10 @@ body, html {
   color: #316993;
   margin-left: 0.5em;
 }
+
+.smallSession {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #316993;
+  margin-left: 0.5em;
+}

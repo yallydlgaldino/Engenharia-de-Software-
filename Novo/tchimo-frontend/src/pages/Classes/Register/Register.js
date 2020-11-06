@@ -3,6 +3,14 @@ import { Redirect, Link } from 'react-router-dom'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import * as Yup from 'yup'
 import { publicFetch } from '../../../util/fetch'
+import '../../../App.css'
+
+import styles from './Register.module.css'
+
+import PeopleIcon from '../../../static/images/people.svg'
+import ArrowIcon from '../../../static/images/arrow.svg'
+
+import TchimoHeader from '../../../components/TchimoHeader/TchimoHeader'
 
 const RegisterSchema = Yup.object().shape({
     name: Yup.string()
@@ -58,7 +66,9 @@ const Register = () => {
 
   return (
     <>
-      <p>Cadastro de Sala</p>
+      <TchimoHeader />
+
+      <p className="session">Cadastro de Turma</p>
 
       <Formik 
         initialValues={{
@@ -76,46 +86,64 @@ const Register = () => {
       >
         {({ errors, touched }) => (
             <Form>
-                <label htmlFor="name">Nome</label>
-                <Field id="name" name="name"/>
-                <ErrorMessage name="name" component="span" />
+                <div className="fieldContainer">
+                  <label htmlFor="name">Nome:</label>
+                  <Field id="name" name="name" className="field" placeholder="nome da turma" />
+                  <div><ErrorMessage name="name" component="span" className="errorMessage" /></div> 
+                </div>
 
-                <label htmlFor="quantityOfGroups">Quantidade de Grupos</label>
-                <Field type="number" id="quantityOfGroups" name="quantityOfGroups"/>
-                <ErrorMessage name="quantityOfGroups" component="span" />
+                <div className="fieldContainer">
+                  <label htmlFor="quantityOfGroups">Quantidade de Grupos:</label>
+                  <Field type="number" id="quantityOfGroups" name="quantityOfGroups" className="field" />
+                  <div><ErrorMessage name="quantityOfGroups" component="span" className="errorMessage" /></div> 
+                </div>
 
-                <p>Estratégias de Formação</p>
+                <p className="smallSession">Estratégias de Formação</p>
 
                 <div role="group" aria-labelledby="formationRadioGroup">
-                    <label>
+                    <div className={styles.radioContainer}>
                         <Field type="radio" name="formationRadioGroup" value="uniforme" />
-                        Uniforme
-                    </label>
-                    <label>
+                        <label>Uniforme</label>
+                        <p>
+                            Limita o número de pessoas  nos grupos com base na quantidade de pessoas 
+                            na sala.
+                        </p>
+                    </div>
+    
+                    <div className={styles.radioContainer}>
                         <Field type="radio" name="formationRadioGroup" value="variavel" />
-                        Variável
-                    </label>
+                        <label>Variável</label>
+                        <p>Não limita o número de pessoas por grupo.</p>
+                    </div>
                 </div>
                 <ErrorMessage name="formationRadioGroup" component="span"/>
 
-                <p>Encerramento de Formação</p>
+                <p className="smallSession">Encerramento de Formação</p>
 
                 <div role="group" aria-labelledby="endingRadioGroup">
-                    <label>
+                    <div className={styles.radioContainer}>
                         <Field type="radio" name="endingRadioGroup" value="manual" />
-                        Manual
-                    </label>
-                    <label>
+                        <label>Manual</label>
+                        <p>Você deverá encerrar a formação manualmente.</p>
+                    </div>
+
+                    <div className={styles.radioContainer}>
                         <Field type="radio" name="endingRadioGroup" value="automatica" />
-                        Automática
-                    </label>
-                    <span>A formação deve ocorrer por: </span>
-                    <Field type="number" name="automaticEndHour" /> horas e
-                    <Field type="number" name="automaticEndMin" /> min
+                        <label>Automática</label>
+                        <p>A formação deve ocorrer por:</p>
+                        <p className={styles.automaticOptionsContainer}>
+                            <Field type="number" name="automaticEndHour" className={styles.automaticOption}/> horas e
+                            <Field type="number" name="automaticEndMin" className={styles.automaticOption} /> min 
+                        </p>
+                    </div>
                 </div>
                 <ErrorMessage name="endingRadioGroup" component="span"/>
 
-                <button type="submit">criar sala</button>
+                <Link to="/login" className="button">
+                    <img src={PeopleIcon} alt="People Icon" />
+                    <span>criar turma</span>
+                    <img src={ArrowIcon} alt="Arrow Icon" />
+                </Link>
             </Form>
         )}
       </Formik>
