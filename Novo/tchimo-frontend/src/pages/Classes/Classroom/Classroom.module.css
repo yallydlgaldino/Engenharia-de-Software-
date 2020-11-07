@@ -1,0 +1,68 @@
+.header {
+    display: flex;
+    width: 100%;
+}
+
+.timeUntilEnd {
+    flex: 3;
+    padding: 0.8em;
+    border: 1px solid #a8a6a6;
+    border-radius: 0.3em;
+    color: #316993;
+    font-weight: bold;
+    margin-left: 0.8em;
+}
+
+.pdfButton {
+    flex: 1;
+    background-color: #316993;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.3em;
+    margin: 0 0.3em;
+}
+
+.groupsContainer {
+    margin: 0 0.8em;
+}
+
+.groupContainer {
+    background-color: #316993;
+    border-radius: 0.4em;
+    padding: 1em 1.5em;
+    color: white;
+    margin: 1.5em 0;
+}
+
+.groupName {
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.membersContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5em 0;
+}
+
+.memberName {
+    margin: 0.2em 0;
+}
+
+.groupOptions {
+    display: flex;
+    flex-direction: column;
+    margin: 0.8em 0 0 0;
+}
+
+.groupSolicitation {
+    text-transform: uppercase;
+    color: #316993;
+    background-color: white;
+    padding: 0.8em;
+    text-align: center;
+    border-radius: 0.4em;
+    font-weight: 600;
+}
