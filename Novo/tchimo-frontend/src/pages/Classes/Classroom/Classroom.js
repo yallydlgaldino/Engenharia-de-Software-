@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 
+import getNormalizedText from '../../../util/text_normalizer'
 import TchimoHeader from '../../../components/TchimoHeader/TchimoHeader'
 import TabbedMenu from '../../../components/TabbedMenu/TabbedMenu'
-
 import GroupListPDF from '../../../components/GroupListPDF'
 
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
@@ -79,8 +79,6 @@ function Classroom(props) {
                 'Wesley Santos',
                 'Ricardo',
                 'Vinicius',
-                'Gilmar',
-                'Wesley Santos',
                 'Ricardo',
                 'Vinicius',
                 'Gilmar',
@@ -101,10 +99,15 @@ function Classroom(props) {
           <div className={styles.header}>
             <span className={styles.timeUntilEnd}> PRAZO: 00:30:00</span>
             {showDownloadLink ?
-              <PDFDownloadLink document={<GroupListPDF data={classroomData} />} fileName="groups.pdf" className={styles.pdfButton}>
-                {({ blob, url, loading, error }) => (loading ? <span><Spinner size="1em" color="white" /></span> : <span><CloudDownloadIcon /></span>)}
+              <PDFDownloadLink 
+                document={<GroupListPDF data={classroomData} />} 
+                fileName={getNormalizedText(`tchimo-${classroomData.name}-${new Date().toLocaleDateString()}`)} 
+                className={styles.pdfButton}>
+                  {({ blob, url, loading, error }) => (loading ? <span><Spinner size="1em" color="white" /></span> : <span><CloudDownloadIcon /></span>)}
               </PDFDownloadLink> : 
-              <span className={styles.pdfButton}><Spinner size="1em" color="white" /></span>
+              <span className={styles.pdfButton}>
+                <Spinner size="1em" color="white" />
+              </span>
             }
           </div>
 

@@ -86,7 +86,7 @@ const Register = () => {
         }}
       >
         {({ errors, touched }) => (
-            <Form>
+            <Form className={styles.registerForm}>
                 <div className="fieldContainer">
                   <label htmlFor="name">Nome:</label>
                   <Field id="name" name="name" className="field" placeholder="nome da turma" />
@@ -101,7 +101,7 @@ const Register = () => {
 
                 <p className="smallSession">Estratégias de Formação</p>
 
-                <div role="group" aria-labelledby="formationRadioGroup">
+                <div role="group" className={styles.formationRadioGroup} aria-labelledby="formationRadioGroup">
                     <div className={styles.radioContainer}>
                         <Field type="radio" name="formationRadioGroup" value="uniforme" />
                         <label>Uniforme</label>
@@ -121,7 +121,7 @@ const Register = () => {
 
                 <p className="smallSession">Encerramento de Formação</p>
 
-                <div role="group" aria-labelledby="endingRadioGroup">
+                <div role="group" className={styles.endingRadioGroup} aria-labelledby="endingRadioGroup">
                     <div className={styles.radioContainer}>
                         <Field type="radio" name="endingRadioGroup" value="manual" />
                         <label>Manual</label>

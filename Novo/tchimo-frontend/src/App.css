@@ -117,6 +117,7 @@ body, html {
 
 .questionLink {
   color: #316993;
+  margin: 0.3em 0;
 }
 
 .footer {
@@ -128,10 +129,15 @@ body, html {
 /* Session Style */
 
 .session {
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-weight: bold;
   color: #316993;
   margin-left: 0.5em;
+
+  width: 95%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .smallSession {

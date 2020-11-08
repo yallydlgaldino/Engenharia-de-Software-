@@ -1,3 +1,7 @@
+.registerForm {
+    margin: 0 0 5em 0;
+}
+
 .radioContainer {
     margin-left: 0.5em;
 }
@@ -28,4 +32,8 @@
     padding: 0.3em 1em;
     color: #316993;
     margin: 0 0.3em;
+}
+
+.endingRadioGroup {
+    margin: 1.5em 0;    
 }

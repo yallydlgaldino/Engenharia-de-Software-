@@ -1,7 +1,7 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Font, Image } from '@react-pdf/renderer';
 
-import MiniLogo from '../static/images/mini_logo.png'
+import MiniLogo from '../static/images/minilogo.png'
 
 Font.register('https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_bZF3gnD-w.ttf', { family: 'MontserratSemiBold' } )
 Font.register('https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_c5H3gnD-w.ttf', { family: 'MontserratExtraBold' } )
@@ -11,8 +11,8 @@ Font.register('https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_d
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
-    backgroundColor: '#316993',
-    color: 'white',
+    backgroundColor: 'white',
+    color: '#316993',
     margin: '20rem'
   },
   group: {
@@ -33,17 +33,17 @@ const styles = StyleSheet.create({
   },
   membersQty: {
     fontSize: 14,
-    border: '2pt solid white',
+    border: '2pt solid #316993',
     width: '120em',
     paddingLeft: '10em',
-    paddingTop: '2em',
-    paddingBottom: '2em',
+    paddingTop: '5em',
+    paddingBottom: '5em',
     marginLeft: '20em',
     marginBottom: '10em',
   },
   memberName: {
     fontSize: 14,
-    border: '2pt solid white',
+    border: '2pt solid #316993',
     width: '520rem',
     paddingLeft: '15em',
     paddingTop: '5em',
