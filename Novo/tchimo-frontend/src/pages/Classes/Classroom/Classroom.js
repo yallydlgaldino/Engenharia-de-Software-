@@ -87,7 +87,7 @@ function Classroom(props) {
           ]
         })
         setHideDownloadLink(true)
-      }, 50)
+      }, 5000)
     }, [])
 
     return (
