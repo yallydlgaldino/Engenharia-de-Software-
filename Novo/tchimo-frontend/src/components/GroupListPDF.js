@@ -3,9 +3,20 @@ import { Page, Text, View, Document, StyleSheet, Font, Image } from '@react-pdf/
 
 import MiniLogo from '../static/images/minilogo.png'
 
-Font.register('https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_bZF3gnD-w.ttf', { family: 'MontserratSemiBold' } )
-Font.register('https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_c5H3gnD-w.ttf', { family: 'MontserratExtraBold' } )
-Font.register('https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_dJE3gnD-w.ttf', { family: 'MontserratBold' } )
+Font.register({
+  src: 'https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_bZF3gnD-w.ttf',
+  family: 'MontserratSemiBold' 
+})
+
+Font.register({
+  src: 'https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_c5H3gnD-w.ttf',
+  family: 'MontserratExtraBold' 
+})
+
+Font.register({
+  src: 'https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_dJE3gnD-w.ttf',
+  family: 'MontserratBold' 
+})
 
 // Create styles
 const styles = StyleSheet.create({

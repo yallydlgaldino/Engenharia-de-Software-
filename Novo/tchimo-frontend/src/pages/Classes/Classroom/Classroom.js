@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { PDFDownloadLink } from '@react-pdf/renderer'
+import { useParams } from "react-router-dom";
 
 import getNormalizedText from '../../../util/text_normalizer'
 import TchimoHeader from '../../../components/TchimoHeader/TchimoHeader'
@@ -7,6 +8,11 @@ import TabbedMenu from '../../../components/TabbedMenu/TabbedMenu'
 import GroupListPDF from '../../../components/GroupListPDF'
 
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import AddIcon from '@material-ui/icons/Add';
+import PeopleIcon from '@material-ui/icons/People';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import ListIcon from '@material-ui/icons/List';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 
 import styles from './Classroom.module.css'
 
@@ -18,8 +24,10 @@ function Classroom(props) {
     const [showDownloadLink, setHideDownloadLink] = useState(false)
     const [classroomData, setClassroomData] = useState({})
 
+    const {code} = useParams()
+    
     useEffect(() => {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         setClassroomData({
           name: 'Engenharia de Software',
           groups: [
@@ -87,6 +95,7 @@ function Classroom(props) {
           ]
         })
         setHideDownloadLink(true)
+        return () => clearTimeout(timeoutId)
       }, 5000)
     }, [])
 
@@ -156,9 +165,41 @@ function Classroom(props) {
                 </span>
               </div>
             </div>
+
+            <button className="button">
+              <AddIcon />
+              <span>criar grupo</span>
+              <PeopleIcon />
+            </button>
           </div>
           
-          <TabbedMenu />
+          <TabbedMenu 
+            customData={{ code }}
+            customLinks={
+              [
+                {
+                  url: '/classes',
+                  icon: <PeopleIcon />,
+                  label: 'Turmas'
+                },
+                {
+                  url: `/classes/${code}`,
+                  icon: <SupervisedUserCircleIcon />,
+                  label: 'Grupos'
+                },
+                {
+                  url: `/classes/${code}/members`,
+                  icon: <ListIcon />,
+                  label: 'Membros'
+                },
+                {
+                  url: '/notifications',
+                  icon: <NotificationsActiveIcon />,
+                  label: 'Notificações'
+                }
+              ]
+            }
+          />
         </>
     )
 }
