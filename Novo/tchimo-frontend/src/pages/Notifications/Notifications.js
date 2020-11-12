@@ -17,7 +17,7 @@ function Notifications() {
 
   const history = useHistory()
 
-  const historyCustomData = history.location.state.from.customData
+  const historyState = history.location.state
 
   return (
     <>
@@ -31,14 +31,34 @@ function Notifications() {
             Você foi convidado pelo grupo 1 da sala de engenharia de software. 
           </span>
           <div className={styles.options}> 
-            <button>aceitar</button>
-            <button>remover</button>
+            <button className={`${styles.acceptButton} ${styles.option}`}>aceitar</button>
+            <button className={`${styles.removeButton} ${styles.option}`}>remover</button>
+          </div>
+        </div>
+
+        <div className={styles.notificationContainer}>
+          <span className={styles.text}>
+            Você foi convidado pelo grupo 1 da sala de engenharia de software. 
+          </span>
+          <div className={styles.options}> 
+            <button className={`${styles.acceptButton} ${styles.option}`}>aceitar</button>
+            <button className={`${styles.removeButton} ${styles.option}`}>remover</button>
+          </div>
+        </div>
+
+        <div className={styles.notificationContainer}>
+          <span className={styles.text}>
+            Você foi convidado pelo grupo 1 da sala de engenharia de software. 
+          </span>
+          <div className={styles.options}> 
+            <button className={`${styles.acceptButton} ${styles.option}`}>aceitar</button>
+            <button className={`${styles.removeButton} ${styles.option}`}>remover</button>
           </div>
         </div>
       </div>
 
       { 
-        (historyCustomData == null || historyCustomData.code == null) ?
+        (historyState == null || historyState.from.customData == null || historyState.from.customData.code == null) ?
           <TabbedMenu />
         :
           <TabbedMenu 
@@ -50,12 +70,12 @@ function Notifications() {
                   label: 'Turmas'
                 },
                 {
-                  url: `/classes/${historyCustomData.code}`,
+                  url: `/classes/${historyState.from.customData.cod}`,
                   icon: <SupervisedUserCircleIcon />,
                   label: 'Grupos'
                 },
                 {
-                  url: `/classes/${historyCustomData.code}/members`,
+                  url: `/classes/${historyState.from.customData.cod}/members`,
                   icon: <ListIcon />,
                   label: 'Membros'
                 },
