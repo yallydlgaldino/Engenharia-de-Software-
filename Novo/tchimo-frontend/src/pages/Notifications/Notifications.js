@@ -10,6 +10,9 @@ import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import TchimoHeader from '../../components/TchimoHeader/TchimoHeader'
 import TabbedMenu from '../../components/TabbedMenu/TabbedMenu'
  
+import '../../App.css'
+import styles from './Notifications.module.css'
+
 function Notifications() {
 
   const history = useHistory()
@@ -20,8 +23,20 @@ function Notifications() {
     <>
       <TchimoHeader />
       
-      <p>Notificações</p>
+      <p className="session">Notificações</p>
       
+      <div className={styles.notificationsContainer}>
+        <div className={styles.notificationContainer}>
+          <span className={styles.text}>
+            Você foi convidado pelo grupo 1 da sala de engenharia de software. 
+          </span>
+          <div className={styles.options}> 
+            <button>aceitar</button>
+            <button>remover</button>
+          </div>
+        </div>
+      </div>
+
       { 
         (historyCustomData == null || historyCustomData.code == null) ?
           <TabbedMenu />
