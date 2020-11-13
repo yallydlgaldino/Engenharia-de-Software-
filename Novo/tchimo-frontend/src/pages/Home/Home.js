@@ -24,12 +24,12 @@ function Home() {
             </div>
             
             <div className={styles.optionsContainer}> 
-                <Link to="/login" className="button">
+                <Link to={{ pathname: "/login", state: { nextRoute: '/classes/register' } }} className="button">
                     <PeopleIcon />
                     <span>criar sala</span>
                     <ArrowForwardIosIcon />
                 </Link>
-                <Link to="/login" className="button">
+                <Link to={{ pathname: "/login", state: { nextRoute: '/classes/join' } }} className="button">
                     <EmojiPeopleIcon />
                     <span>participar</span>
                     <ArrowForwardIosIcon />

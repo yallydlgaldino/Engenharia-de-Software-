@@ -29,9 +29,10 @@
     outline: 0;
     border: 2px solid #316993;
     border-radius: 0.2em;
-    padding: 0.3em 1em;
+    padding: 0.3em 0;
+    text-align: center;
     color: #316993;
-    margin: 0 0.3em;
+    margin: 0.5em 0.3em;
 }
 
 .endingRadioGroup {

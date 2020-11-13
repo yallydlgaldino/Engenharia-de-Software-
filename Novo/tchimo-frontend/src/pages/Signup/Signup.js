@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import * as Yup from 'yup'
-import { publicFetch } from '../../util/fetch'
+import { publicFetch } from '../../util/publicFetch'
 import { toast } from 'react-toastify';
 
 import { AuthContext } from '../../contexts/AuthContext' 
@@ -32,8 +32,6 @@ const SignupSchema = Yup.object().shape({
 const Signup = () => {
   const authContext = useContext(AuthContext);
 
-  const [signupSuccess, setSignupSuccess] = useState('')
-  const [signupError, setSignupError] = useState('')
   const [redirectOnLogin, setRedirectOnLogin] = useState(false)
 
   const submitCredentials = async signupData => {
@@ -44,9 +42,6 @@ const Signup = () => {
             `usuarios/adiciona`,
             credentials
         )
-
-        setSignupSuccess(data.message)
-        setSignupError('')
 
         toast.success("Cadastro realizado com sucesso", {
           autoClose: 2000

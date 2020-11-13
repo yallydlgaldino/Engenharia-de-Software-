@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react'
-import { Redirect, Link } from 'react-router-dom'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import * as Yup from 'yup'
-import { publicFetch } from '../../../util/fetch'
+import { AuthFetchContext } from '../../../contexts/AuthFetchContext'
+import { toast } from 'react-toastify';
+
 import '../../../App.css'
 
 import styles from './Register.module.css'
@@ -15,53 +16,55 @@ import TabbedMenu from '../../../components/TabbedMenu/TabbedMenu'
 
 const RegisterSchema = Yup.object().shape({
     name: Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Required'),
+        .min(2, 'Nome contém menos de 2 caracteres.')
+        .max(50, 'Nome contém mais de 50 caracteres.')
+        .required('O campo é obrigatório.'),
     quantityOfGroups: Yup.number()
-        .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Required'),
-    formationRadioGroup: Yup.string()
-        .required('Required'),
-    endingRadioGroup: Yup.string()
-        .required('Required'),
-    automaticHour: Yup.number().when('endingRadioGroup', {
-        is: 'automatica',
-        then: fieldSchema => fieldSchema.required('Amount of hour is required'),
-    }),
-    automaticMin: Yup.number().when('endingRadioGroup', {
-        is: 'automatica',
-        then: fieldSchema => fieldSchema.required('Amount of minutes is required'),
-    }),
+        .min(1, '1 grupo é o mínimo.')
+        .max(50, '50 grupos é o máximo.')
+        .required('O campo é obrigatório.'),
+    formationStrategy: Yup.string()
+        .required('O campo é obrigatório'),
+    endingStrategy: Yup.string()
+        .required('O campo é obrigatório'),
+    endTime: Yup.number()
+        .min(0, "Quantidade de horas negativa.")
+        .when('endingStrategy', {
+            is: 'automatica',
+            then: fieldSchema => fieldSchema.required('Especifique uma quantidade de horas.'),
+        }),
+    minutes: Yup.number()
+        .min(0, "Quantidade de minutos negativa.")
+        .max(60, "Quantidade de minutos maior que 60.")
+        .when('endingStrategy', {
+            is: 'automatica',
+            then: fieldSchema => fieldSchema.required('Especifique uma quantidade de minutos'),
+        }),
 });
 
 const Register = () => {
 
-  const [registerSuccess, setRegisterSuccess] = useState('')
-  const [registerError, setRegisterError] = useState('')
+  const { authFetch } = useContext(AuthFetchContext)
   const [redirectOnRegister, setRedirectOnRegister] = useState(false)
 
   const submitRegister = async registerData => {
-    console.log(registerData);
 
     try {
-        const { data } = await publicFetch.post(
-            `usuarios/adiciona`,
-            registerData
-        )
-
-        setRegisterSuccess(data.message)
-        setRegisterError('')
+        const { data } = await authFetch.post(`turma/add`, registerData)
+        
+        toast.success(`Cadastro realizado com sucesso. ${data}`, {
+            autoClose: 20000
+        })
 
         setTimeout(() => {
             setRedirectOnRegister(true)
         }, 500)
     } catch (error) {
-        console.log(error);
-        const { data } = error.response
-        setRegisterError(data.message)
-        setRegisterSuccess('')
+        toast.error(`Ocorreu um erro no cadastro. Tente novamente. ${error}`, {
+            autoClose: 2000
+        })
+
+        console.log(error)
     }
   };
 
@@ -75,10 +78,10 @@ const Register = () => {
         initialValues={{
             name: '',
             quantityOfGroups: 1,
-            formationRadioGroup: 'uniforme',
-            endingRadioGroup: 'manual',
-            automaticEndHour: 0,
-            automaticEndMin: 0
+            formationStrategy: 'UNIFORME',
+            endingStrategy: 'MANUAL',
+            endTime: 0,
+            minutes: 0
         }}
         validationSchema={RegisterSchema}
         onSubmit={ values => {
@@ -101,9 +104,9 @@ const Register = () => {
 
                 <p className="smallSession">Estratégias de Formação</p>
 
-                <div role="group" className={styles.formationRadioGroup} aria-labelledby="formationRadioGroup">
+                <div role="group" className={styles.formationRadioGroup} aria-labelledby="formationStrategy">
                     <div className={styles.radioContainer}>
-                        <Field type="radio" name="formationRadioGroup" value="uniforme" />
+                        <Field type="radio" name="formationStrategy" value="UNIFORME" />
                         <label>Uniforme</label>
                         <p>
                             Limita o número de pessoas  nos grupos com base na quantidade de pessoas 
@@ -112,39 +115,41 @@ const Register = () => {
                     </div>
     
                     <div className={styles.radioContainer}>
-                        <Field type="radio" name="formationRadioGroup" value="variavel" />
+                        <Field type="radio" name="formationStrategy" value="VARIAVEL" />
                         <label>Variável</label>
                         <p>Não limita o número de pessoas por grupo.</p>
                     </div>
                 </div>
-                <ErrorMessage name="formationRadioGroup" component="span"/>
+                <ErrorMessage name="formationStrategy" component="span" className="errorMessage"/>
 
                 <p className="smallSession">Encerramento de Formação</p>
 
-                <div role="group" className={styles.endingRadioGroup} aria-labelledby="endingRadioGroup">
+                <div role="group" className={styles.endingRadioGroup} aria-labelledby="endingStrategy">
                     <div className={styles.radioContainer}>
-                        <Field type="radio" name="endingRadioGroup" value="manual" />
+                        <Field type="radio" name="endingStrategy" value="MANUAL" />
                         <label>Manual</label>
                         <p>Você deverá encerrar a formação manualmente.</p>
                     </div>
 
                     <div className={styles.radioContainer}>
-                        <Field type="radio" name="endingRadioGroup" value="automatica" />
+                        <Field type="radio" name="endingStrategy" value="CRONOMETRO" />
                         <label>Automática</label>
                         <p>A formação deve ocorrer por:</p>
                         <p className={styles.automaticOptionsContainer}>
-                            <Field type="number" name="automaticEndHour" className={styles.automaticOption}/> horas e
-                            <Field type="number" name="automaticEndMin" className={styles.automaticOption} /> min 
+                            <Field type="number" name="endTime" className={styles.automaticOption} /> horas e
+                            <Field type="number" name="minutes" className={styles.automaticOption} /> min 
+                            <ErrorMessage name="endTime" component="span" className="errorMessage" />
+                            <ErrorMessage name="minutes" component="span" className="errorMessage" />
                         </p>
                     </div>
                 </div>
-                <ErrorMessage name="endingRadioGroup" component="span"/>
+                <ErrorMessage name="endingRadioGroup" component="span" className="errorMessage" />
 
-                <Link to="/login" className="button">
+                <button type="submit" className="button">
                     <PeopleIcon />
                     <span>criar turma</span>
                     <ArrowForwardIosIcon />
-                </Link>
+                </button>
             </Form>
         )}
       </Formik>

@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react'
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect, Link, useLocation } from 'react-router-dom'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import * as Yup from 'yup'
-import { publicFetch } from '../../util/fetch'
+import { publicFetch } from '../../util/publicFetch'
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/AuthContext' 
 
@@ -22,9 +22,9 @@ const LoginSchema = Yup.object().shape({
 const Login = () => {
   const authContext = useContext(AuthContext);
 
-  const [loginSuccess, setLoginSuccess] = useState('')
-  const [loginError, setLoginError] = useState('')
   const [redirectOnLogin, setRedirectOnLogin] = useState(authContext.isAuthenticated())
+
+  const location = useLocation()
 
   const submitCredentials = async credentials => {
 
@@ -45,15 +45,17 @@ const Login = () => {
       }, 500)
     } catch (error) {
       const { data } = error.response
-      toast.error(JSON.stringify(data.token).replaceAll("\"", ""), {
+      toast.error(JSON.stringify(data.token), {
         autoClose: 2000
       })
     }
   };
 
+  const redirectTo = location.state != null ? location.state.nextRoute : '/classes'
+
   return (
     <>
-      {redirectOnLogin && <Redirect to="/classes" />}
+      {redirectOnLogin && <Redirect to={redirectTo} />}
 
       <div className={styles.logoContainer}>
         <img src={Logo} className={styles.logo} alt="Tchimo Logo" />

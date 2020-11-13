@@ -86,13 +86,15 @@ body, html {
   color: #316993;
 }
 
-.fieldContainer .errorMessage {
+.errorMessage {
   color: white;
   background-color: #FF6565;
   border-radius: 0.2em;
   padding: 0.2em 0.3em;
   font-size: 0.8em;
   font-weight: 500;
+  display: inline-block;
+  margin: 0.2em 0;
 }
 
 .field {

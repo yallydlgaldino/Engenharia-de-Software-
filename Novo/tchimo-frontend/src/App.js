@@ -19,6 +19,7 @@ import Members from './pages/Classes/Members/Members'
 import Notifications from './pages/Notifications/Notifications'
 
 import { AuthContext, AuthProvider } from './contexts/AuthContext'
+import { AuthFetchProvider } from './contexts/AuthFetchContext'
 
 const UnauthenticatedRoutes = () => (
   <Switch>
@@ -43,7 +44,7 @@ const AuthenticatedRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={() =>
-        !auth.isAuthenticated() ? (
+        auth.isAuthenticated() ? (
           <>{children}</>
         ) : (
           <Redirect to="/" />
@@ -102,12 +103,14 @@ function App() {
     <MobileFilter>
       <Router>
         <AuthProvider>
-          <ToastContainer />
-          <div className="app">
-            <div className="wrapper">
-              <AppRoutes />      
+          <AuthFetchProvider>
+            <ToastContainer />
+            <div className="app">
+              <div className="wrapper">
+                <AppRoutes />      
+              </div>
             </div>
-          </div>
+          </AuthFetchProvider>
         </AuthProvider>
       </Router>
     </MobileFilter>
