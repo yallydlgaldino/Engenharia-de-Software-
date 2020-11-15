@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
+import { useHistory } from "react-router-dom";
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import * as Yup from 'yup'
 import { AuthFetchContext } from '../../../contexts/AuthFetchContext'
@@ -21,21 +22,17 @@ const JoinSchema = Yup.object().shape({
 const Join = () => {
 
   const { authFetch } = useContext(AuthFetchContext)
-  const [redirectOnLogin, setRedirectOnLogin] = useState(false)
+  const history = useHistory()
 
   const submitJoin = async ({id}) => {
     try {      
-      console.log(id);
-
-      const { data } = await authFetch.post(`turma/${id}/entraTurma`)
+      const { data } = await authFetch.post(`turmas/${id}`)
 
       toast.success(`Bem vindo a turma de código ${id}!`, {
         autoClose: 2000
       })
 
-      setTimeout(() => {
-        setRedirectOnLogin(true)
-      }, 500)
+      history.push(`/classes/${id}`)
     } catch (error) {
       toast.error(`Ocorreu um erro no participação. Tente novamente.`, {
         autoClose: 2000

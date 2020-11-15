@@ -38,44 +38,60 @@ function Classroom(props) {
 
     const {code} = useParams()
     
+    const fetchClassroom = async () => {
+      const { data } = await authFetch.get(
+        `turmas/${code}`
+      )
+
+      setClassroomName(data.name)
+
+      setGroups([
+        {
+          name: 'Grupo 1',
+          members: [
+            'Wesley Santos',
+            'Angela',
+            'Caio Medeiros'
+          ]
+        },
+        {
+          name: 'Grupo 2',
+          members: [
+            'Wesley Santos',
+          ]
+        }
+      ]);
+
+      setEndTimestamp(data.endTimestamp)
+      setFormationStrategy(data.formationStrategy)
+      setEndingStrategy(data.endingStrategy)
+
+      setLoaded(true)
+
+      setHideDownloadLink(true)
+    }
+
     useEffect(() => {
+      
+      try {
+        fetchClassroom()
+      } catch(error) {
+        setNotFound(true)
+        toast.error(`Ocorreu um erro na atualização.`, {
+          autoClose: 2000
+        })
+      }
 
       const intervalId = setInterval(async () => {
         try {
-          const { data } = await authFetch.get(
-            `turma/${code}`
-          )
-
-          setClassroomName(data.name)
-
-          setGroups([
-            {
-              name: 'Grupo 1',
-              members: [
-                'Wesley Santos',
-                'Angela',
-                'Caio Medeiros'
-              ]
-            },
-            {
-              name: 'Grupo 2',
-              members: [
-                'Wesley Santos',
-              ]
-            }
-          ]);
-
-          setEndTimestamp(data.endTimestamp)
-          setFormationStrategy(data.formationStrategy)
-          setEndingStrategy(data.endingStrategy)
-
-          setLoaded(true)
+          fetchClassroom()
         } catch(error) {
           setNotFound(true)
           clearInterval(intervalId)
+          toast.error(`Ocorreu um erro na atualização.`, {
+            autoClose: 2000
+          })
         }
-
-        setHideDownloadLink(true)
       }, 5000)
 
       return () => clearInterval(intervalId)
@@ -115,9 +131,15 @@ function Classroom(props) {
                     <span className={styles.memberName}> 2. Angela </span>
                   </div>
                   <div className={styles.groupOptions}>
-                    <span className={styles.groupSolicitation}>
+                    <button className={styles.groupSolicitation}>
+                      Solicitar Junção
+                    </button>
+                    <button className={styles.groupSolicitation}>
                       Solicitar Participação
-                    </span>
+                    </button>
+                    <button className={styles.groupSolicitation}>
+                      Sair de Grupo
+                    </button>
                   </div>
                 </div>
     
@@ -130,24 +152,15 @@ function Classroom(props) {
                     <span className={styles.memberName}> 2. Angela </span>
                   </div>
                   <div className={styles.groupOptions}>
-                    <span className={styles.groupSolicitation}>
+                    <button className={styles.groupSolicitation}>
+                      Solicitar Junção
+                    </button>
+                    <button className={styles.groupSolicitation}>
                       Solicitar Participação
-                    </span>
-                  </div>
-                </div>
-    
-                <div className={styles.groupContainer}>
-                  <div className={styles.groupHeader}>
-                    <span className={styles.groupName}>Grupo 3</span>
-                  </div>
-                  <div className={styles.membersContainer}>
-                    <span className={styles.memberName}> 1. Wesley Santos </span>
-                    <span className={styles.memberName}> 2. Angela </span>
-                  </div>
-                  <div className={styles.groupOptions}>
-                    <span className={styles.groupSolicitation}>
-                      Solicitar Participação
-                    </span>
+                    </button>
+                    <button className={styles.groupSolicitation}>
+                      Sair de Grupo
+                    </button>
                   </div>
                 </div>
     
@@ -188,7 +201,13 @@ function Classroom(props) {
             </>
             :
             <>
-              <p className="session">{!notFound ? 'Carregando...' : 'Turma não foi encontrada.'}</p>
+              <div className={styles.transitionScreen}>
+                { !notFound ? 
+                    <Spinner size={55} color='#316993' />
+                  :
+                    <p>Turma não encontrada :(</p>
+                }
+              </div>
               <TabbedMenu />
             </>
           }

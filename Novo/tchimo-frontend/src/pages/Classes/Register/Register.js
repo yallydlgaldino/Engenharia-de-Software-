@@ -50,7 +50,7 @@ const Register = () => {
   const submitRegister = async registerData => {
 
     try {
-        const { data } = await authFetch.post(`turma/add`, registerData)
+        const { data } = await authFetch.post(`turmas`, registerData)
         
         toast.success(`Cadastro realizado com sucesso. ${data}`, {
             autoClose: 20000

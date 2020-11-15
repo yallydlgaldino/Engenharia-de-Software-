@@ -44,8 +44,7 @@ const Login = () => {
         setRedirectOnLogin(true)
       }, 500)
     } catch (error) {
-      const { data } = error.response
-      toast.error(JSON.stringify(data.token), {
+      toast.error("Houve um erro no login.", {
         autoClose: 2000
       })
     }

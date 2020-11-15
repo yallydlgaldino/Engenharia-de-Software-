@@ -39,7 +39,7 @@ const Signup = () => {
     
     try {
         const { data } = await publicFetch.post(
-            `usuarios/adiciona`,
+            `usuarios`,
             credentials
         )
 

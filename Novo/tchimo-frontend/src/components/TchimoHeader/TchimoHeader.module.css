@@ -10,6 +10,8 @@
     display: flex;
     align-items: center;
     padding-left: 2.5em;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .Link {
@@ -25,4 +27,17 @@
 
 .Header span {
     font-size: 1.2em;
+}
+
+.logoutBtn {
+    background-color: #4185b9;
+    color: white;
+    margin-right: 3.5em;
+    text-decoration: none;
+    border-radius: 0.4em;
+    padding: 0.65em 1.5em;
+    font-size: 0.8em;
+    font-weight: 600;
+    border: none;
+    text-transform: uppercase;
 }

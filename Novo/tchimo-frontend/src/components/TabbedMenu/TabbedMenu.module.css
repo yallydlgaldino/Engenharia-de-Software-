@@ -12,6 +12,7 @@
     justify-content: space-evenly;
     background-color: #316993;
     color: white;
+    border-top: 3px solid #4793ce;
 }
 
 .tabbedMenu li {
@@ -37,4 +38,5 @@
 
 .selectedTab {
     background-color: #234A67;
+    border-top: 1.5px solid #4793ce;
 }

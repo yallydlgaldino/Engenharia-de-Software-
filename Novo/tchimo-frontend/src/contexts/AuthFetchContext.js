@@ -1,5 +1,8 @@
 import React, { createContext, useContext } from 'react';
-import axios from 'axios';
+import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify';
+import axios, { CancelToken } from 'axios';
+
 import { AuthContext } from './AuthContext';
 
 const AuthFetchContext = createContext();
@@ -7,15 +10,29 @@ const { Provider } = AuthFetchContext;
 
 const AuthFetchProvider = ({ children }) => {
   const authContext = useContext(AuthContext);
-
+  const history = useHistory()
+  
   const authFetch = axios.create({
     baseURL: 'http://tchimo-webservice.herokuapp.com/api/'
   });
 
   authFetch.interceptors.request.use(
     config => {
-      config.headers.Authorization = `Bearer ${authContext.authState.token}`;
-      return config;
+      if (authContext.isAuthenticated()) {
+        config.headers.Authorization = `Bearer ${authContext.authState.token}`;
+        return config;
+      }
+      
+      history.push('/login')
+    
+      toast.error("Sua sessão expirou.", {
+        autoClose: 2000
+      })
+
+      return {
+        ...config,
+        cancelToken: new CancelToken((cancel) => cancel('Expired Token'))
+      };
     },
     error => {
       return Promise.reject(error);
