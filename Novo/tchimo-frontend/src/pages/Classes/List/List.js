@@ -9,6 +9,7 @@ import Spinner from '../../../components/Spinner'
 
 import '../../../App.css'
 import styles from './List.module.css'
+import ConfirmationButton from '../../../components/ConfirmationButton/ConfirmationButton';
 
 function List() {
 
@@ -59,9 +60,9 @@ function List() {
                     Acessar
                 </Link>
                 { !classroom.usuario ? 
-                    <button className={styles.classSolicitation}>
+                    <ConfirmationButton className={styles.classSolicitation} action={() => alert("sair")}>
                         Sair da Turma
-                    </button>
+                    </ConfirmationButton>
                     : null
                 }
                 { classroom.endingStrategy === "MANUAL" ? 

@@ -41,3 +41,7 @@
     align-items: center;
     justify-content: center;
 }
+
+.option {
+    margin: 0.5em;
+}
