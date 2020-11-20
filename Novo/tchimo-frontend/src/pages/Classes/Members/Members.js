@@ -24,19 +24,18 @@ function Members(props) {
           <p className="session">Membros da Turma</p>
           
           <div className={styles.membersContainer}>
-            <div className={styles.memberContainer}>
-              <span className={styles.memberName}>Wesley Santos</span>
-              <button><EmailIcon /></button>
-            </div>
-
             <div className={`${styles.memberContainer} ${styles.active}`}>
               <span className={styles.memberName}>Wesley Santos</span>
               <button><EmailIcon /></button>
             </div>
 
-            <div className={`${styles.memberContainer} ${styles.invite}`}>
-              <span className={styles.memberName}>Wesley Santos</span>
+            <div className={`${styles.memberContainer} ${styles.active}`}>
+              <span className={styles.memberName}>Gabriel Silva</span>
               <button><EmailIcon /></button>
+            </div>
+
+            <div className={`${styles.memberContainer} ${styles.invite}`}>
+              <span className={styles.memberName}>Gustavo Mattos</span>
             </div>
           </div>
 

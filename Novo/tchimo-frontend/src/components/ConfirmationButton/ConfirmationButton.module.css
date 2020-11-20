@@ -12,6 +12,6 @@
 }
 
 .confirm {
-    background-color: #e46023;
-    color: white;
+    background-color: #e46023 !important;
+    color: white !important;
 }

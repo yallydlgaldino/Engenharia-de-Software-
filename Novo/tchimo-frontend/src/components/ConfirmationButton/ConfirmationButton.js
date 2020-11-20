@@ -16,7 +16,7 @@ const ConfirmationButton = (props) => {
   };
 
   return (
-    <button className={ready ? `${props.className} ${styles.confirm} ${styles.default}` : `${styles.default} ${props.className}`} onClick={() => confirm()}>
+    <button className={ready ? `${props.className} ${styles.default} ${styles.confirm}` : `${styles.default} ${props.className}`} onClick={() => confirm()}>
       { ready ? 'Clique para confirmar': <>{props.children}</> }
     </button>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
+import { Redirect } from 'react-router-dom'
 import * as Yup from 'yup'
 import { AuthFetchContext } from '../../../contexts/AuthFetchContext'
 import { toast } from 'react-toastify';
@@ -53,7 +54,7 @@ const Register = () => {
         const { data } = await authFetch.post(`turmas`, registerData)
         
         toast.success(`Cadastro realizado com sucesso. ${data}`, {
-            autoClose: 20000
+            autoClose: 2000
         })
 
         setTimeout(() => {
@@ -70,6 +71,8 @@ const Register = () => {
 
   return (
     <>
+      {redirectOnRegister && <Redirect to='/classes' />}
+
       <TchimoHeader />
 
       <p className="session">Cadastro de Turma</p>

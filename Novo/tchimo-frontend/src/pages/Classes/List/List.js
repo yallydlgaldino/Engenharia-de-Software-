@@ -24,12 +24,36 @@ function List() {
         setLoaded(true)
     }
 
+    const removeClass = async (id) => {
+        try {
+            await authFetch.delete(`turmas/${id}`)
+            toast.success("Turma removida com sucesso.", {
+                autoClose: 2000
+            })
+        } catch(error) {
+            toast.error(`Não foi possível remover a turma.`, {
+                autoClose: 2000
+            })
+        }
+    }
+
+    const leaveClass = async (id) => {
+        try {
+            await authFetch.delete(`turmas/${id}/members`)
+            toast.success("Você saiu da turma com sucesso.", {
+                autoClose: 2000
+            })
+        } catch(error) {
+            toast.error(`Não foi possível remover a turma.`, {
+                autoClose: 2000
+            })
+        }
+    }
+
     useEffect(() => {
-      
       try {
         fetchList()
       } catch(error) {
-        clearInterval(intervalId)
         toast.error(`Ocorreu um erro na atualização.`, {
           autoClose: 2000
         })
@@ -39,7 +63,6 @@ function List() {
         try {
           fetchList()
         } catch(error) {
-          clearInterval(intervalId)
           toast.error(`Ocorreu um erro na atualização.`, {
             autoClose: 2000
           })
@@ -47,7 +70,6 @@ function List() {
       }, 5000)
 
       return () => clearInterval(intervalId)
-    
     }, [])
 
     const generateClassroomsMarkup = (classroomsArray) => classroomsArray.map(classroom => (
@@ -60,10 +82,13 @@ function List() {
                     Acessar
                 </Link>
                 { !classroom.usuario ? 
-                    <ConfirmationButton className={styles.classSolicitation} action={() => alert("sair")}>
+                    <ConfirmationButton className={styles.classSolicitation} action={() => leaveClass(`${classroom.id}`)}>
                         Sair da Turma
                     </ConfirmationButton>
-                    : null
+                    : 
+                    <ConfirmationButton className={styles.classSolicitation} action={() => removeClass(`${classroom.id}`)}>
+                        Remover Turma
+                    </ConfirmationButton>
                 }
                 { classroom.endingStrategy === "MANUAL" ? 
                     <button className={styles.classSolicitation}>
@@ -71,7 +96,7 @@ function List() {
                     </button>
                     : null
                 }
-                { true ? 
+                { false ? 
                     <button className={styles.classSolicitation}>
                         Distribuir
                     </button>

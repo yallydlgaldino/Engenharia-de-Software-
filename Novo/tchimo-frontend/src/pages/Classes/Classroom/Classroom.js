@@ -21,6 +21,8 @@ import styles from './Classroom.module.css'
 import Spinner from '../../../components/Spinner'
 
 import '.././../../App.css'
+import Countdown from '../../../components/Countdown';
+import ConfirmationButton from '../../../components/ConfirmationButton/ConfirmationButton';
 
 function Classroom(props) {
     const [showDownloadLink, setHideDownloadLink] = useState(false)
@@ -62,7 +64,7 @@ function Classroom(props) {
         }
       ]);
 
-      setEndTimestamp(data.endTimestamp)
+      setEndTimestamp(data.endDate)
       setFormationStrategy(data.formationStrategy)
       setEndingStrategy(data.endingStrategy)
 
@@ -107,7 +109,12 @@ function Classroom(props) {
               <p className="session">{classroomName}</p>
 
               <div className={styles.header}>
-                <span className={styles.timeUntilEnd}> PRAZO: 00:30:00</span>
+                <span className={styles.timeUntilEnd}> PRAZO: {
+                  endingStrategy === "CRONOMETRO" && (endTimestamp - (new Date().getTime() / 1000) > 0) ? 
+                    <Countdown time={endTimestamp - (new Date().getTime() / 1000)}/>
+                  :
+                    'Indeterminado'
+                }</span>
                 {showDownloadLink ?
                   <PDFDownloadLink 
                     document={<GroupListPDF name={classroomName} groups={groups} />} 
@@ -131,36 +138,15 @@ function Classroom(props) {
                     <span className={styles.memberName}> 2. Angela </span>
                   </div>
                   <div className={styles.groupOptions}>
-                    <button className={styles.groupSolicitation}>
+                    {/* <button className={styles.groupSolicitation}>
                       Solicitar Junção
-                    </button>
-                    <button className={styles.groupSolicitation}>
+                    </button> */}
+                    {/* <button className={styles.groupSolicitation}>
                       Solicitar Participação
-                    </button>
-                    <button className={styles.groupSolicitation}>
+                    </button> */}
+                    <ConfirmationButton className={styles.groupSolicitation}>
                       Sair de Grupo
-                    </button>
-                  </div>
-                </div>
-    
-                <div className={styles.groupContainer}>
-                  <div className={styles.groupHeader}>
-                    <span className={styles.groupName}>Grupo 2</span>
-                  </div>
-                  <div className={styles.membersContainer}>
-                    <span className={styles.memberName}> 1. Wesley Santos </span>
-                    <span className={styles.memberName}> 2. Angela </span>
-                  </div>
-                  <div className={styles.groupOptions}>
-                    <button className={styles.groupSolicitation}>
-                      Solicitar Junção
-                    </button>
-                    <button className={styles.groupSolicitation}>
-                      Solicitar Participação
-                    </button>
-                    <button className={styles.groupSolicitation}>
-                      Sair de Grupo
-                    </button>
+                    </ConfirmationButton>
                   </div>
                 </div>
     

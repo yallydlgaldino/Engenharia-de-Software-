@@ -48,7 +48,7 @@ const Signup = () => {
         })
 
         setTimeout(() => {
-            setRedirectOnLogin(true)
+          setRedirectOnLogin(true)
         }, 500)
     } catch (error) {
       toast.error("Erro: Já existe usuário com esse email.", {
@@ -59,6 +59,8 @@ const Signup = () => {
 
   return (
     <>
+      {redirectOnLogin && <Redirect to='/login' />}
+
       <TchimoHeader />
 
       <p className="session">Cadastre-se</p>

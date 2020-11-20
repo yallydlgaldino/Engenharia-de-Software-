@@ -38,7 +38,7 @@ function Notifications() {
 
         <div className={styles.notificationContainer}>
           <span className={styles.text}>
-            Você foi convidado pelo grupo 1 da sala de engenharia de software. 
+            O grupo 2 de engenharia de software solicitou uma junção com o seu grupo. 
           </span>
           <div className={styles.options}> 
             <button className={`${styles.acceptButton} ${styles.option}`}>aceitar</button>
@@ -48,12 +48,8 @@ function Notifications() {
 
         <div className={styles.notificationContainer}>
           <span className={styles.text}>
-            Você foi convidado pelo grupo 1 da sala de engenharia de software. 
+            O grupo 3 aceitou sua solicitação de participação. 
           </span>
-          <div className={styles.options}> 
-            <button className={`${styles.acceptButton} ${styles.option}`}>aceitar</button>
-            <button className={`${styles.removeButton} ${styles.option}`}>remover</button>
-          </div>
         </div>
       </div>
 
