@@ -66,12 +66,12 @@ function Notifications() {
                   label: 'Turmas'
                 },
                 {
-                  url: `/classes/${historyState.from.customData.cod}`,
+                  url: `/classes/${historyState.from.customData.code}`,
                   icon: <SupervisedUserCircleIcon />,
                   label: 'Grupos'
                 },
                 {
-                  url: `/classes/${historyState.from.customData.cod}/members`,
+                  url: `/classes/${historyState.from.customData.code}/members`,
                   icon: <ListIcon />,
                   label: 'Membros'
                 },

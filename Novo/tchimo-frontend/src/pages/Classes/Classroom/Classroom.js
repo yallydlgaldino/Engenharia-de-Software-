@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { PDFDownloadLink } from '@react-pdf/renderer'
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AuthFetchContext } from '../../../contexts/AuthFetchContext'
 import { toast } from 'react-toastify'
 
-import getNormalizedText from '../../../util/text_normalizer'
+import getNormalizedText from '../../../util/textNormalizer'
 import TchimoHeader from '../../../components/TchimoHeader/TchimoHeader'
 import TabbedMenu from '../../../components/TabbedMenu/TabbedMenu'
 import GroupListPDF from '../../../components/GroupListPDF'
@@ -39,66 +39,59 @@ function Classroom(props) {
     const { authFetch } = useContext(AuthFetchContext)
 
     const {code} = useParams()
-    
-    const fetchClassroom = async () => {
-      const { data } = await authFetch.get(
-        `turmas/${code}`
-      )
-
-      setClassroomName(data.name)
-
-      setGroups([
-        {
-          name: 'Grupo 1',
-          members: [
-            'Wesley Santos',
-            'Angela',
-            'Caio Medeiros'
-          ]
-        },
-        {
-          name: 'Grupo 2',
-          members: [
-            'Wesley Santos',
-          ]
-        }
-      ]);
-
-      setEndTimestamp(data.endDate)
-      setFormationStrategy(data.formationStrategy)
-      setEndingStrategy(data.endingStrategy)
-
-      setLoaded(true)
-
-      setHideDownloadLink(true)
-    }
 
     useEffect(() => {
-      
-      try {
-        fetchClassroom()
-      } catch(error) {
-        setNotFound(true)
-        toast.error(`Ocorreu um erro na atualização.`, {
-          autoClose: 2000
-        })
-      }
-
-      const intervalId = setInterval(async () => {
+      const fetchClassroom = async (intervalId) => {
         try {
-          fetchClassroom()
-        } catch(error) {
+          const { data } = await authFetch.get(
+            `turmas/${code}`
+          )
+          
+          setClassroomName(data.name)
+  
+          setGroups([
+            {
+              name: 'Grupo 1',
+              members: [
+                'Wesley Santos',
+                'Angela',
+                'Caio Medeiros'
+              ]
+            },
+            {
+              name: 'Grupo 2',
+              members: [
+                'Wesley Santos',
+              ]
+            }
+          ]);
+  
+          setEndTimestamp(data.endDate)
+          setFormationStrategy(data.formationStrategy)
+          setEndingStrategy(data.endingStrategy)
+  
+          setLoaded(true)
+  
+          setHideDownloadLink(true)
+        } catch (error) {
           setNotFound(true)
-          clearInterval(intervalId)
-          toast.error(`Ocorreu um erro na atualização.`, {
+          toast.error(`Ocorreu um erro ao procurar a sala.`, {
             autoClose: 2000
           })
+          if (intervalId != null) {
+            clearInterval(intervalId)
+          }
         }
+      }
+
+      fetchClassroom()
+      
+      const intervalId = setInterval(async () => {
+        fetchClassroom(intervalId)
       }, 5000)
 
       return () => clearInterval(intervalId)
-    
-    }, [])
+    }, [code])
 
     return (
         <>

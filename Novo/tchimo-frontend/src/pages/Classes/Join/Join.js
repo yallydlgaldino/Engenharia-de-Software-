@@ -26,7 +26,7 @@ const Join = () => {
 
   const submitJoin = async ({id}) => {
     try {      
-      const { data } = await authFetch.post(`turmas/${id}`)
+      await authFetch.post(`turmas/${id}`)
 
       toast.success(`Bem vindo a turma de código ${id}!`, {
         autoClose: 2000

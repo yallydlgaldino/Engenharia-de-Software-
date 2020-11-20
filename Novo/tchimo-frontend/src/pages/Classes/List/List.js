@@ -17,12 +17,6 @@ function List() {
     const [classrooms, setClassrooms] = useState([])
 
     const { authFetch } = useContext(AuthFetchContext)
-    
-    const fetchList = async () => {
-        const { data }  = await authFetch.get(`turmas`)
-        setClassrooms(data)
-        setLoaded(true)
-    }
 
     const removeClass = async (id) => {
         try {
@@ -51,6 +45,12 @@ function List() {
     }
 
     useEffect(() => {
+      const fetchList = async () => {
+        const { data }  = await authFetch.get(`turmas`)
+        setClassrooms(data)
+        setLoaded(true)
+      }
+
       try {
         fetchList()
       } catch(error) {
@@ -114,7 +114,13 @@ function List() {
                 <>
                     <p className="session">Salas</p>
                     <div className={styles.classesContainer}>
-                        {generateClassroomsMarkup(classrooms)}
+                        {generateClassroomsMarkup(classrooms).length !== 0 ? 
+                            generateClassroomsMarkup(classrooms) 
+                            : 
+                            <div className={styles.notFoundScreen}>
+                                <p>Turmas não encontradas :(</p>
+                            </div>
+                        }
                     </div>
                 </>
                 :      

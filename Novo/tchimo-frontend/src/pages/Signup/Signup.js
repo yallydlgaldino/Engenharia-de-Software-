@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import * as Yup from 'yup'
 import { publicFetch } from '../../util/publicFetch'
 import { toast } from 'react-toastify';
-
-import { AuthContext } from '../../contexts/AuthContext' 
 
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
@@ -30,15 +28,13 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Signup = () => {
-  const authContext = useContext(AuthContext);
-
   const [redirectOnLogin, setRedirectOnLogin] = useState(false)
 
   const submitCredentials = async signupData => {
     const credentials = {name: signupData.name, email: signupData.email, password: signupData.password}
     
     try {
-        const { data } = await publicFetch.post(
+        await publicFetch.post(
             `usuarios`,
             credentials
         )

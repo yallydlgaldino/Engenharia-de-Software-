@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 
 import { ToastContainer } from 'react-toastify';
-import { toast } from 'react-toastify';
 
 import './App.css' 
 

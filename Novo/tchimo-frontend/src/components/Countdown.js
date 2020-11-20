@@ -13,24 +13,24 @@ function Countdown(props) {
   useEffect(() => {
     const intervalId = setInterval(() => {
         if (seconds > 0) {
-            setSeconds(seconds - 1) 
+          setSeconds(seconds - 1) 
         } else if (seconds === 0 && minutes > 0) { 
-            setMinutes(minutes - 1)
-            setSeconds(59)
+          setMinutes(minutes - 1)
+          setSeconds(59)
         }
         
         if (minutes === 0 && hours > 0) { 
-            setHours(hours - 1)
-            setMinutes(59)
+          setHours(hours - 1)
+          setMinutes(59)
         }
 
         if (hours === 0 && minutes === 0 && seconds === 0) {
-            clearInterval(intervalId)
+          clearInterval(intervalId)
         }
     }, 1000)
 
     return () => clearInterval(intervalId);
-  }, [seconds]);
+  }, [seconds, minutes, hours]);
 
   const pad = (number) => {
     return ('0' + number).slice(-2)
