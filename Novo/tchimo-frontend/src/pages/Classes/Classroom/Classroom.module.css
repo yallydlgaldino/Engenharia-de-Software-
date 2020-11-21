@@ -48,6 +48,10 @@
 
 .memberName {
     margin: 0.2em 0;
+    width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .groupOptions {

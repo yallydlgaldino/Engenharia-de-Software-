@@ -33,7 +33,7 @@ function List() {
 
     const leaveClass = async (id) => {
         try {
-            await authFetch.delete(`turmas/${id}/members`)
+            await authFetch.delete(`turmas/${id}/membership`)
             toast.success("Você saiu da turma com sucesso.", {
                 autoClose: 2000
             })
@@ -86,16 +86,20 @@ function List() {
                         Sair da Turma
                     </ConfirmationButton>
                     : 
-                    <ConfirmationButton className={styles.classSolicitation} action={() => removeClass(`${classroom.id}`)}>
-                        Remover Turma
-                    </ConfirmationButton>
+                    <>
+                        <ConfirmationButton className={styles.classSolicitation} action={() => removeClass(`${classroom.id}`)}>
+                            Remover Turma
+                        </ConfirmationButton>
+
+                        { classroom.endingStrategy === "MANUAL" ? 
+                            <button className={styles.classSolicitation}>
+                                Encerrar Formação
+                            </button>
+                            : null
+                        }
+                    </>
                 }
-                { classroom.endingStrategy === "MANUAL" ? 
-                    <button className={styles.classSolicitation}>
-                        Encerrar Formação
-                    </button>
-                    : null
-                }
+                
                 { false ? 
                     <button className={styles.classSolicitation}>
                         Distribuir

@@ -8,30 +8,32 @@ const AuthProvider = ({ children }) => {
   const history = useHistory();
 
   const token = localStorage.getItem('token');
-  const email = localStorage.getItem('email');
+  const idUser = localStorage.getItem('idUser');
   const expiresIn = localStorage.getItem('expires_in');
 
   const [authState, setAuthState] = useState({
     token,
     expiresIn,
-    email: email ? JSON.parse(email) : {}
+    idUser: idUser ? JSON.parse(idUser) : {}
   });
 
-  const setAuthInfo = ({ token, email, expires_in : expiresIn }) => {
+  console.log(authState)
+
+  const setAuthInfo = ({ token, idUser, expires_in : expiresIn }) => {
     localStorage.setItem('token', token);
-    localStorage.setItem('email', JSON.stringify(email));
+    localStorage.setItem('idUser', JSON.stringify(idUser));
     localStorage.setItem('expires_in', expiresIn);
 
     setAuthState({
       token,
-      email,
+      idUser,
       expiresIn
     });
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('email');
+    localStorage.removeItem('idUser');
     localStorage.removeItem('expires_in');
     setAuthState({});
     history.push('/login');

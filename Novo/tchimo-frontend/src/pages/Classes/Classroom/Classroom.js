@@ -48,24 +48,7 @@ function Classroom(props) {
           )
           
           setClassroomName(data.name)
-  
-          setGroups([
-            {
-              name: 'Grupo 1',
-              members: [
-                'Wesley Santos',
-                'Angela',
-                'Caio Medeiros'
-              ]
-            },
-            {
-              name: 'Grupo 2',
-              members: [
-                'Wesley Santos',
-              ]
-            }
-          ]);
-  
+          setGroups(data.groups)
           setEndTimestamp(data.endDate)
           setFormationStrategy(data.formationStrategy)
           setEndingStrategy(data.endingStrategy)
@@ -92,6 +75,46 @@ function Classroom(props) {
 
       return () => clearInterval(intervalId)
     }, [code])
+
+    const createGroup = async () => {
+      try {
+        await authFetch.post(
+          `turmas/${code}/grupos`
+        )
+        toast.success("Grupo criado com sucesso.", {
+          autoClose: 2000
+        })
+      } catch (error) {
+        toast.error(`Ocorreu um erro ao criar grupo.`, {
+          autoClose: 2000
+        })
+      }
+    }
+
+    const generateGroupsMarkup = (groupsArray) => groupsArray.map((group, index) => (
+      <div className={styles.groupContainer} key={index}>
+        <div className={styles.groupHeader}>
+        <span className={styles.groupName}>Grupo {group.idGroup}</span>
+        </div>
+        <div className={styles.membersContainer}>
+          { group.members.map((member, index) => (
+              <span className={styles.memberName} id={member.id} key={index}> {index + 1}. {member.name} </span>
+          )) }
+        </div>
+        <div className={styles.groupOptions}>
+          {/* <button className={styles.groupSolicitation}>
+            Solicitar Junção
+          </button> */}
+          {/* <button className={styles.groupSolicitation}>
+            Solicitar Participação
+          </button> */}
+          {/* <ConfirmationButton className={styles.groupSolicitation}>
+            Sair de Grupo
+          </ConfirmationButton> */}
+        </div>
+      </div>
+    ))
+    
 
     return (
         <>
@@ -122,28 +145,13 @@ function Classroom(props) {
               </div>
     
               <div className={styles.groupsContainer}>
-                <div className={styles.groupContainer}>
-                  <div className={styles.groupHeader}>
-                    <span className={styles.groupName}>Grupo 1</span>
-                  </div>
-                  <div className={styles.membersContainer}>
-                    <span className={styles.memberName}> 1. Wesley Santos </span>
-                    <span className={styles.memberName}> 2. Angela </span>
-                  </div>
-                  <div className={styles.groupOptions}>
-                    {/* <button className={styles.groupSolicitation}>
-                      Solicitar Junção
-                    </button> */}
-                    {/* <button className={styles.groupSolicitation}>
-                      Solicitar Participação
-                    </button> */}
-                    <ConfirmationButton className={styles.groupSolicitation}>
-                      Sair de Grupo
-                    </ConfirmationButton>
-                  </div>
-                </div>
+                {generateGroupsMarkup(groups).length !== 0 ? 
+                    generateGroupsMarkup(groups) 
+                    : 
+                    null
+                }
     
-                <button className="button">
+                <button className="button" onClick={createGroup}>
                   <AddIcon />
                   <span>criar grupo</span>
                   <PeopleIcon />
