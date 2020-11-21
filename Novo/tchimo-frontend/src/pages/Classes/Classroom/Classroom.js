@@ -31,6 +31,7 @@ function Classroom(props) {
     const [notFound, setNotFound] = useState(false)
 
     const [groups, setGroups] = useState([])
+    const [membersWithoutGroup, setMembersWithoutGroup] = useState([])
     const [classroomName, setClassroomName] = useState("")
     const [endTimestamp, setEndTimestamp] = useState(0)
     const [formationStrategy, setFormationStrategy] = useState("")
@@ -52,7 +53,7 @@ function Classroom(props) {
           setEndTimestamp(data.endDate)
           setFormationStrategy(data.formationStrategy)
           setEndingStrategy(data.endingStrategy)
-  
+          setMembersWithoutGroup(data.integrantesSemGrupo)
           setLoaded(true)
   
           setHideDownloadLink(true)
@@ -91,6 +92,26 @@ function Classroom(props) {
       }
     }
 
+    const sendSolicitation = async (idTurma, idGrupo, idUser) => {
+      try {
+        await authFetch.post(
+          `turmas/solicitations`, {
+            id_turma: idTurma,
+            id_group: idGrupo,
+            type: "ENTRY-GROUP",
+            id_user: idUser
+          }
+        )
+        toast.success("Solicitação de participação enviada.", {
+          autoClose: 2000
+        })
+      } catch (error) {
+        toast.error(`Houve um erro ao solicitar.`, {
+          autoClose: 2000
+        })
+      }
+    }
+
     const generateGroupsMarkup = (groupsArray) => groupsArray.map((group, index) => (
       <div className={styles.groupContainer} key={index}>
         <div className={styles.groupHeader}>
@@ -105,9 +126,13 @@ function Classroom(props) {
           {/* <button className={styles.groupSolicitation}>
             Solicitar Junção
           </button> */}
-          {/* <button className={styles.groupSolicitation}>
-            Solicitar Participação
-          </button> */}
+          { membersWithoutGroup.length != 0 && localStorage.getItem('idUser') != null && membersWithoutGroup.some(m => m.id == localStorage.getItem('idUser')) ? 
+            <button className={styles.groupSolicitation} onClick={() => sendSolicitation(code, group.idGroup, localStorage.getItem('idUser'))}>
+              Solicitar Participação
+            </button> 
+            :
+            null
+          }
           {/* <ConfirmationButton className={styles.groupSolicitation}>
             Sair de Grupo
           </ConfirmationButton> */}

@@ -3,21 +3,6 @@ import { Page, Text, View, Document, StyleSheet, Font, Image } from '@react-pdf/
 
 import MiniLogo from '../static/images/minilogo.png'
 
-Font.register({
-  src: 'https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_bZF3gnD-w.ttf',
-  family: 'MontserratSemiBold' 
-})
-
-Font.register({
-  src: 'https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_c5H3gnD-w.ttf',
-  family: 'MontserratExtraBold' 
-})
-
-Font.register({
-  src: 'https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_dJE3gnD-w.ttf',
-  family: 'MontserratBold' 
-})
-
 // Create styles
 const styles = StyleSheet.create({
   page: {
@@ -30,16 +15,16 @@ const styles = StyleSheet.create({
     margin: '10rem 0'
   },
   groupName: {
-    fontFamily: 'MontserratSemiBold',
+    fontFamily: 'Helvetica',
     marginBottom: '10em',
     fontSize: 14
   },
   className: {
-    fontFamily: 'MontserratExtraBold',
+    fontFamily: 'Helvetica-Bold',
     margin: '40rem 0'
   },
   groups: {
-    fontFamily: 'MontserratBold',
+    fontFamily: 'Helvetica-Bold',
     margin: '10rem 0'
   },
   membersQty: {
@@ -73,7 +58,7 @@ const styles = StyleSheet.create({
   },
   generatedMessage: {
     fontSize: 13,
-    fontFamily: 'MontserratBold',
+    fontFamily: 'Helvetica-Bold',
     marginTop: '20em'
   }
 });
