@@ -44,6 +44,32 @@ function List() {
         }
     }
 
+    const endFormation = async (id) => {
+        try {
+            await authFetch.put(`turmas/${id}`)
+            toast.success("Turma encerrada com sucesso.", {
+                autoClose: 2000
+            })
+        } catch(error) {
+            toast.error(`Não foi possível encerrar a turma.`, {
+                autoClose: 2000
+            })
+        }
+    }
+
+    const distribute = async (id) => {
+        try {
+            await authFetch.put(`turmas/${id}/distribution`)
+            toast.success("Grupos distribuidos com sucesso.", {
+                autoClose: 2000
+            })
+        } catch(error) {
+            toast.error(`Não foi possível distribuir os grupos.`, {
+                autoClose: 2000
+            })
+        }
+    }
+
     useEffect(() => {
       const fetchList = async () => {
         const { data }  = await authFetch.get(`turmas`)
@@ -73,7 +99,7 @@ function List() {
     }, [])
 
     const generateClassroomsMarkup = (classroomsArray) => classroomsArray.map(classroom => (
-        <div className={styles.classContainer} key={classroom.id}>
+        <div className={`${styles.classContainer} ${ (classroom.locked) ? styles.inactive : ''}`} key={classroom.id}>
             <span className={styles.className}>{classroom.name}</span>
             <span className={styles.classCode}>CÓDIGO: {classroom.id}</span>
             <span className={styles.classInfo}>{classroom.integrantes.length} membro(s) - {classroom.totalGroups} grupo(s)</span>
@@ -91,19 +117,19 @@ function List() {
                             Remover Turma
                         </ConfirmationButton>
 
-                        { classroom.endingStrategy === "MANUAL" ? 
-                            <button className={styles.classSolicitation}>
+                        { classroom.endingStrategy === "MANUAL" && !classroom.locked ? 
+                            <ConfirmationButton className={styles.classSolicitation} action={() => endFormation(`${classroom.id}`)}>
                                 Encerrar Formação
-                            </button>
+                            </ConfirmationButton>
                             : null
                         }
                     </>
                 }
                 
-                { false ? 
-                    <button className={styles.classSolicitation}>
+                { classroom.locked && classroom.integrantesSemGrupo != 0 ? 
+                    <ConfirmationButton className={styles.classSolicitation} action={() => distribute(`${classroom.id}`)}>
                         Distribuir
-                    </button>
+                    </ConfirmationButton>
                     : null
                 }
             </div>

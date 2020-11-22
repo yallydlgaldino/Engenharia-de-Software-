@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { PDFDownloadLink } from '@react-pdf/renderer'
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { AuthFetchContext } from '../../../contexts/AuthFetchContext'
 import { toast } from 'react-toastify'
 
-import getNormalizedText from '../../../util/textNormalizer'
 import TchimoHeader from '../../../components/TchimoHeader/TchimoHeader'
 import TabbedMenu from '../../../components/TabbedMenu/TabbedMenu'
-import GroupListPDF from '../../../components/GroupListPDF'
 
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import AddIcon from '@material-ui/icons/Add';
@@ -25,10 +22,9 @@ import Countdown from '../../../components/Countdown';
 import ConfirmationButton from '../../../components/ConfirmationButton/ConfirmationButton';
 
 function Classroom(props) {
-    const [showDownloadLink, setHideDownloadLink] = useState(false)
-
     const [isLoaded, setLoaded] = useState(false)
     const [notFound, setNotFound] = useState(false)
+    const [locked, setLocked] = useState(false)
 
     const [groups, setGroups] = useState([])
     const [membersWithoutGroup, setMembersWithoutGroup] = useState([])
@@ -54,9 +50,9 @@ function Classroom(props) {
           setFormationStrategy(data.formationStrategy)
           setEndingStrategy(data.endingStrategy)
           setMembersWithoutGroup(data.integrantesSemGrupo)
+          setLocked(data.locked)
+
           setLoaded(true)
-  
-          setHideDownloadLink(true)
         } catch (error) {
           setNotFound(true)
           toast.error(`Ocorreu um erro ao procurar a sala.`, {
@@ -75,7 +71,7 @@ function Classroom(props) {
       }, 5000)
 
       return () => clearInterval(intervalId)
-    }, [code])
+    }, [code, classroomName, endTimestamp, formationStrategy, endingStrategy, JSON.stringify(groups), JSON.stringify(membersWithoutGroup)])
 
     const createGroup = async () => {
       try {
@@ -112,10 +108,26 @@ function Classroom(props) {
       }
     }
 
+    const sendLeave = async (idGrupo) => {
+      console.log(idGrupo)
+      try {
+        await authFetch.delete(
+          `turmas/${code}/grupos/${idGrupo}`
+        )
+        toast.success("Você saiu do grupo com sucesso.", {
+          autoClose: 2000
+        })
+      } catch (error) {
+        toast.error(`Houve um erro ao sair de grupo.`, {
+          autoClose: 2000
+        })
+      }
+    }
+
     const generateGroupsMarkup = (groupsArray) => groupsArray.map((group, index) => (
       <div className={styles.groupContainer} key={index}>
         <div className={styles.groupHeader}>
-        <span className={styles.groupName}>Grupo {group.idGroup}</span>
+        <span className={styles.groupName}>Grupo {index + 1}</span>
         </div>
         <div className={styles.membersContainer}>
           { group.members.map((member, index) => (
@@ -123,9 +135,6 @@ function Classroom(props) {
           )) }
         </div>
         <div className={styles.groupOptions}>
-          {/* <button className={styles.groupSolicitation}>
-            Solicitar Junção
-          </button> */}
           { membersWithoutGroup.length != 0 && localStorage.getItem('idUser') != null && membersWithoutGroup.some(m => m.id == localStorage.getItem('idUser')) ? 
             <button className={styles.groupSolicitation} onClick={() => sendSolicitation(code, group.idGroup, localStorage.getItem('idUser'))}>
               Solicitar Participação
@@ -133,9 +142,13 @@ function Classroom(props) {
             :
             null
           }
-          {/* <ConfirmationButton className={styles.groupSolicitation}>
-            Sair de Grupo
-          </ConfirmationButton> */}
+          { group.members.some(m => m.id == localStorage.getItem('idUser')) ?
+            <ConfirmationButton className={styles.groupSolicitation} action={() => sendLeave(group.idGroup)}>
+              Sair de Grupo
+            </ConfirmationButton>
+            :
+            null
+          }
         </div>
       </div>
     ))
@@ -153,25 +166,15 @@ function Classroom(props) {
                   endingStrategy === "CRONOMETRO" && (endTimestamp - (new Date().getTime() / 1000) > 0) ? 
                     <Countdown time={endTimestamp - (new Date().getTime() / 1000)}/>
                   :
-                    'Indeterminado'
+                    locked ? 'Encerrado' : 'Indeterminado'
                 }</span>
-                {showDownloadLink ?
-                  <PDFDownloadLink 
-                    document={<GroupListPDF name={classroomName} groups={groups} />} 
-                    fileName={getNormalizedText(`tchimo-${classroomName}-${new Date().toLocaleDateString()}`)} 
-                    className={styles.pdfButton}>
-                      {({ blob, url, loading, error }) => (loading ? <span><Spinner size="1em" color="white" /></span> : <span><CloudDownloadIcon /></span>)}
-                  </PDFDownloadLink> : 
-                  <span className={styles.pdfButton}>
-                    <Spinner size="1em" color="white" />
-                  </span>
-                }
+                <Link to={`/classes/${code}/download`} className={styles.pdfButton}><CloudDownloadIcon /></Link>
               </div>
     
               <div className={styles.groupsContainer}>
                 {generateGroupsMarkup(groups).length !== 0 ? 
-                    generateGroupsMarkup(groups) 
-                    : 
+                    generateGroupsMarkup(groups)
+                    :
                     null
                 }
     

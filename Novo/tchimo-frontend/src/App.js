@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify'
 
 import './App.css' 
 
@@ -14,6 +14,7 @@ import Signup from './pages/Signup/Signup'
 import List from './pages/Classes/List/List'
 import Classroom from './pages/Classes/Classroom/Classroom'
 import Join from './pages/Classes/Join/Join'
+import Pdf from './pages/Classes/Pdf/Pdf'
 import Register from './pages/Classes/Register/Register'
 import Members from './pages/Classes/Members/Members'
 import Notifications from './pages/Notifications/Notifications'
@@ -73,6 +74,9 @@ const AppRoutes = () => {
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/classes/:code/members">
           <Members />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute path="/classes/:code/download">
+          <Pdf />
         </AuthenticatedRoute>
         <AuthenticatedRoute path="/notifications">
           <Notifications />
