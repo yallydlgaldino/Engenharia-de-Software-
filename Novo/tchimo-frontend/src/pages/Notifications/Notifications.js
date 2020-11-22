@@ -40,6 +40,10 @@ function Notifications() {
         setLoaded(true)
         setNotifications(data)
 
+        if (data.length === 0) {
+          setLoaded(false)
+          setNotFound(true)
+        }
       } catch (error) {
         setNotFound(true)
         toast.error(`Ocorreu um erro ao procurar suas notificações.`, {
@@ -81,12 +85,19 @@ function Notifications() {
   const generateNotificationsMarkup = (notificationsArray) => notificationsArray.map((notification, index) => (
     <div className={styles.notificationContainer} key={index}>
       <span className={styles.text}>
-        {notification.type == "ENTRY-GROUP" ? `${notification.user.name} te pediu para participar no seu grupo de ${notification.name_turma}` : null }
+        {notification.type === "ENTRY-GROUP" ? `${notification.user.name} te pediu para participar no seu grupo de ${notification.name_turma}` : null }
+        {notification.type === "SEND-INVITATION" ? `${notification.user.name} te convidou para o seu grupo de ${notification.name_turma}` : null }
+        {notification.type === "ACK-INVITATION" ? `Parabéns, ${notification.user.name} aceitou seu convite`  : null}
+        {notification.type === "ACK-SOLICITATION" ? `Parabéns, agora você está participando no grupo ${notification.id_group} da turma de ${notification.name_turma}`  : null}
       </span>
-      <div className={styles.options}> 
-        <button className={`${styles.acceptButton} ${styles.option}`} onClick={() => sendResponse(notification.id, true)}>aceitar</button>
-        <button className={`${styles.removeButton} ${styles.option}`} onClick={() => sendResponse(notification.id, false)}>remover</button>
-      </div>
+      {!notification.type.includes('ACK') ?
+        <div className={styles.options}> 
+          <button className={`${styles.acceptButton} ${styles.option}`} onClick={() => sendResponse(notification.id, true)}>aceitar</button>
+          <button className={`${styles.removeButton} ${styles.option}`} onClick={() => sendResponse(notification.id, false)}>remover</button>
+        </div>
+        :
+        null
+      }
     </div>
   ))
 
