@@ -88,7 +88,7 @@ function Notifications() {
         {notification.type === "ENTRY-GROUP" ? `${notification.user.name} te pediu para participar no seu grupo de ${notification.name_turma}` : null }
         {notification.type === "SEND-INVITATION" ? `${notification.user.name} te convidou para o seu grupo de ${notification.name_turma}` : null }
         {notification.type === "ACK-INVITATION" ? `Parabéns, ${notification.user.name} aceitou seu convite`  : null}
-        {notification.type === "ACK-SOLICITATION" ? `Parabéns, agora você está participando no grupo ${notification.id_group} da turma de ${notification.name_turma}`  : null}
+        {notification.type === "ACK-SOLICITATION" ? `Parabéns, agora você está participando em um grupo da turma de ${notification.name_turma}`  : null}
       </span>
       {!notification.type.includes('ACK') ?
         <div className={styles.options}> 

@@ -134,22 +134,26 @@ function Classroom(props) {
               <span className={styles.memberName} id={member.id} key={index}> {index + 1}. {member.name} </span>
           )) }
         </div>
-        <div className={styles.groupOptions}>
-          { membersWithoutGroup.length != 0 && localStorage.getItem('idUser') != null && membersWithoutGroup.some(m => m.id == localStorage.getItem('idUser')) ? 
-            <button className={styles.groupSolicitation} onClick={() => sendSolicitation(code, group.idGroup, localStorage.getItem('idUser'))}>
-              Solicitar Participação
-            </button> 
-            :
-            null
-          }
-          { group.members.some(m => m.id == localStorage.getItem('idUser')) ?
-            <ConfirmationButton className={styles.groupSolicitation} action={() => sendLeave(group.idGroup)}>
-              Sair de Grupo
-            </ConfirmationButton>
-            :
-            null
-          }
-        </div>
+        { !locked ?
+          <div className={styles.groupOptions}>
+            { membersWithoutGroup.length != 0 && localStorage.getItem('idUser') != null && membersWithoutGroup.some(m => m.id == localStorage.getItem('idUser')) ? 
+              <button className={styles.groupSolicitation} onClick={() => sendSolicitation(code, group.idGroup, localStorage.getItem('idUser'))}>
+                Solicitar Participação
+              </button> 
+              :
+              null
+            }
+            { group.members.some(m => m.id == localStorage.getItem('idUser')) ?
+              <ConfirmationButton className={styles.groupSolicitation} action={() => sendLeave(group.idGroup)}>
+                Sair de Grupo
+              </ConfirmationButton>
+              :
+              null
+            }
+          </div>
+          :
+          null
+        }
       </div>
     ))
     
@@ -178,11 +182,15 @@ function Classroom(props) {
                     null
                 }
     
-                <button className="button" onClick={createGroup}>
-                  <AddIcon />
-                  <span>criar grupo</span>
-                  <PeopleIcon />
-                </button>
+                { !locked ?
+                  <button className="button" onClick={createGroup}>
+                    <AddIcon />
+                    <span>criar grupo</span>
+                    <PeopleIcon />
+                  </button>
+                  :
+                  null
+                }
               </div>
 
               <TabbedMenu 

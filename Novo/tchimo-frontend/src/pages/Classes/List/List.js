@@ -108,9 +108,10 @@ function List() {
                     Acessar
                 </Link>
                 { !classroom.usuario ? 
-                    <ConfirmationButton className={styles.classSolicitation} action={() => leaveClass(`${classroom.id}`)}>
-                        Sair da Turma
-                    </ConfirmationButton>
+                    !classroom.locked &&
+                        <ConfirmationButton className={styles.classSolicitation} action={() => leaveClass(`${classroom.id}`)}>
+                            Sair da Turma
+                        </ConfirmationButton>
                     : 
                     <>
                         <ConfirmationButton className={styles.classSolicitation} action={() => removeClass(`${classroom.id}`)}>
@@ -123,14 +124,14 @@ function List() {
                             </ConfirmationButton>
                             : null
                         }
+
+                        { classroom.locked && classroom.integrantesSemGrupo != 0 ? 
+                            <ConfirmationButton className={styles.classSolicitation} action={() => distribute(`${classroom.id}`)}>
+                                Distribuir
+                            </ConfirmationButton>
+                            : null
+                        }
                     </>
-                }
-                
-                { classroom.locked && classroom.integrantesSemGrupo != 0 ? 
-                    <ConfirmationButton className={styles.classSolicitation} action={() => distribute(`${classroom.id}`)}>
-                        Distribuir
-                    </ConfirmationButton>
-                    : null
                 }
             </div>
         </div>

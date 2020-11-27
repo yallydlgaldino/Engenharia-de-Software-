@@ -69,7 +69,7 @@ function GroupListPDF(props) {
 
   const generateGroupsMarkup = (groups) => groups.map((group, groupIndex) => (
     <View style={styles.group} key={groupIndex}>
-      <Text style={styles.groupName}>Grupo {group.idGroup}: </Text>
+      <Text style={styles.groupName}>Grupo {groupIndex + 1}: </Text>
       <View>
         <Text style={styles.membersQty}>{group.members.length} participante{group.members.length !== 1 ? 's' : ''}</Text>
         { group.members.map((member, memberIndex) => (
